@@ -29,7 +29,7 @@ AS "Step Number" FROM dual;
 -- ----------------------------------------------------------------------
 -- Objective #1: Setup preseed for _LAB tables 
 -- ----------------------------------------------------------------------
-@preseed_oracle_store_lab_tables
+@presdeed_oracle_store_lab_tables
 
 spool off
 

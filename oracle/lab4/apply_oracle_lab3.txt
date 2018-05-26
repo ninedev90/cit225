@@ -1,0 +1,19 @@
+SQL> SET PAGESIZE 999
+SQL> -- ----------------------------------------------------------------------
+SQL> -- Step #0 : CALL updated preseed script that has _lab corrections in it
+SQL> -- ----------------------------------------------------------------------
+SQL> SELECT 'Step #0 Call updated preseed script that has _lab corrections in it'
+  2  AS "Step Number" FROM dual;
+
+Step Number                                                                     
+-------------------------------------------------------------------             
+Step #0 Call updated preseed script that has _lab corrections in it             
+
+SQL> 
+SQL> -- ----------------------------------------------------------------------
+SQL> -- Objective #1: Setup preseed for _LAB tables
+SQL> -- ----------------------------------------------------------------------
+SQL> @preseed_oracle_store_lab_tables
+SP2-0310: unable to open file "preseed_oracle_store_lab_tables.sql"
+SQL> 
+SQL> spool off
