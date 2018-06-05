@@ -65,13 +65,13 @@ BEGIN
   ( member_lab_s1.NEXTVAL
   ,(SELECT   common_lookup_lab_id
     FROM     common_lookup_lab
-    WHERE    common_lookup_lab_context = 'MEMBER_LAB'
+    WHERE    common_lookup_lab_context = 'member_lab'
     AND      common_lookup_lab_type = pv_member_lab_type)
   , pv_account_number
   , pv_credit_card_number
   ,(SELECT   common_lookup_lab_id
     FROM     common_lookup_lab
-    WHERE    common_lookup_lab_context = 'MEMBER_LAB'
+    WHERE    common_lookup_lab_context = 'member_lab'
     AND      common_lookup_lab_type = pv_credit_card_type)
   , pv_created_by
   , pv_creation_date
@@ -85,7 +85,7 @@ BEGIN
   , member_lab_s1.CURRVAL
   ,(SELECT   common_lookup_lab_id
     FROM     common_lookup_lab
-    WHERE    common_lookup_lab_context = 'CONTACT_LAB'
+    WHERE    common_lookup_lab_context = 'contact_lab'
     AND      common_lookup_lab_type = pv_contact_lab_type)
   , pv_first_name
   , pv_middle_name

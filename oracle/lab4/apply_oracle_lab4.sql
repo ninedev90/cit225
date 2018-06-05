@@ -26,9 +26,9 @@
 @@group_account2_lab.sql
 @@group_account3_lab.sql
 @@item_inserts_lab.sql
-@@create_insert_contact_lab.sql
+@@create_insert_contacts_lab.sql
 @@individual_accounts_lab.sql
-@@update_member_labs.sql
+@@update_members_labs.sql
 @@rental_inserts_lab.sql
 @@create_view_lab.sql
  
@@ -106,7 +106,7 @@ FROM     member_lab m INNER JOIN contact_lab c ON m.member_lab_id = c.member_lab
          telephone_lab t ON c.contact_lab_id = t.contact_lab_id AND a.address_lab_id = t.address_lab_id
 WHERE    m.member_lab_type = (SELECT common_lookup_lab_id
                           FROM   common_lookup_lab
-                          WHERE  common_lookup_lab_context = 'MEMBER'
+                          WHERE  common_lookup_lab_context = 'MEMBER_LAB'
                           AND    common_lookup_lab_type = 'INDIVIDUAL');
 
 -- ------------------------------------------------------------------
@@ -125,14 +125,14 @@ SELECT   m.member_lab_id
 ||       CASE
            WHEN c.middle_name IS NOT NULL THEN ' ' || SUBSTR(c.middle_name,1,1)
          END AS full_name
-,        r.rental_id
+,        r.rental_lab_id
 ,        ri.rental_item_lab_id
 ,        i.item_lab_title
 FROM     member_lab m INNER JOIN contact_lab c ON m.member_lab_id = c.member_lab_id INNER JOIN
-         rental r ON c.contact_lab_id = r.customer_id INNER JOIN
-         rental_item_lab ri ON r.rental_id = ri.rental_id INNER JOIN
+         rental_lab r ON c.contact_lab_id = r.customer_id INNER JOIN
+         rental_item_lab ri ON r.rental_lab_id = ri.rental_lab_id INNER JOIN
          item_lab i ON ri.item_lab_id = i.item_lab_id
-ORDER BY r.rental_id;
+ORDER BY r.rental_lab_id;
  
 SPOOL OFF
  

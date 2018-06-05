@@ -24,10 +24,11 @@ SQL> INSERT INTO rental
  19  , SYSDATE
  20  , 1001
  21  , SYSDATE);
-,(SELECT   contact_lab_id
-           *
-ERROR at line 12:
-ORA-01400: cannot insert NULL into ("STUDENT"."RENTAL"."CUSTOMER_ID") 
+INSERT INTO rental
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (STUDENT.FK_RENTAL_1) violated - parent key not
+found 
 
 
 SQL> 
@@ -52,10 +53,11 @@ SQL> INSERT INTO rental
  19  , SYSDATE
  20  , 1001
  21  , SYSDATE);
-,(SELECT   contact_lab_id
-           *
-ERROR at line 12:
-ORA-01400: cannot insert NULL into ("STUDENT"."RENTAL"."CUSTOMER_ID") 
+INSERT INTO rental
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (STUDENT.FK_RENTAL_1) violated - parent key not
+found 
 
 
 SQL> 
@@ -80,10 +82,11 @@ SQL> INSERT INTO rental
  19  , SYSDATE
  20  , 1001
  21  , SYSDATE);
-,(SELECT   contact_lab_id
-           *
-ERROR at line 12:
-ORA-01400: cannot insert NULL into ("STUDENT"."RENTAL"."CUSTOMER_ID") 
+INSERT INTO rental
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (STUDENT.FK_RENTAL_1) violated - parent key not
+found 
 
 
 SQL> 
@@ -108,10 +111,11 @@ SQL> INSERT INTO rental
  19  , SYSDATE
  20  , 1001
  21  , SYSDATE);
-,(SELECT   contact_lab_id
-           *
-ERROR at line 12:
-ORA-01400: cannot insert NULL into ("STUDENT"."RENTAL"."CUSTOMER_ID") 
+INSERT INTO rental
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (STUDENT.FK_RENTAL_1) violated - parent key not
+found 
 
 
 SQL> 
@@ -136,10 +140,11 @@ SQL> INSERT INTO rental
  19  , SYSDATE
  20  , 1001
  21  , SYSDATE);
-,(SELECT   contact_lab_id
-           *
-ERROR at line 12:
-ORA-01400: cannot insert NULL into ("STUDENT"."RENTAL"."CUSTOMER_ID") 
+INSERT INTO rental
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (STUDENT.FK_RENTAL_1) violated - parent key not
+found 
 
 
 SQL> 

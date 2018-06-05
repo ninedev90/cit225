@@ -1,3 +1,5 @@
+SQL> -- Set the page size.
+SQL> SET ECHO ON
 SQL> SET PAGESIZE 999
 SQL> -- ----------------------------------------------------------------------
 SQL> -- Step #0 : CALL updated preseed script that has _lab corrections in it
@@ -8,6 +10,8 @@ SQL> SELECT 'Step #0 Call updated preseed script that has _lab corrections in it
 Step Number                                                                     
 -------------------------------------------------------------------             
 Step #0 Call updated preseed script that has _lab corrections in it             
+
+1 row selected.
 
 SQL> 
 SQL> -- ----------------------------------------------------------------------
@@ -218,11 +222,8 @@ SQL> INSERT INTO system_user_lab
  17  , 1	    -- last_updated_by
  18  , SYSDATE	    -- last_update_date
  19  );
-INSERT INTO system_user_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.PK_SYSTEM_USER_LAB_1) violated 
 
+1 row created.
 
 SQL> 
 SQL> -- --------------------------------------------------------
@@ -328,11 +329,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.PK_CLOOKUP_LAB_1) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -354,11 +352,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.PK_CLOOKUP_LAB_1) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -380,11 +375,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.PK_CLOOKUP_LAB_1) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -406,11 +398,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.PK_CLOOKUP_LAB_1) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -432,11 +421,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.PK_CLOOKUP_LAB_1) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -458,11 +444,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.COMMON_LOOKUP_LAB_U2) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -484,11 +467,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.COMMON_LOOKUP_LAB_U2) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -510,11 +490,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.COMMON_LOOKUP_LAB_U2) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -536,11 +513,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.COMMON_LOOKUP_LAB_U2) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -562,11 +536,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.COMMON_LOOKUP_LAB_U2) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -588,11 +559,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.COMMON_LOOKUP_LAB_U2) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -614,11 +582,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.COMMON_LOOKUP_LAB_U2) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -640,11 +605,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.COMMON_LOOKUP_LAB_U2) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -666,11 +628,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.COMMON_LOOKUP_LAB_U2) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -692,11 +651,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.COMMON_LOOKUP_LAB_U2) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -718,11 +674,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.COMMON_LOOKUP_LAB_U2) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -744,11 +697,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.COMMON_LOOKUP_LAB_U2) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -770,11 +720,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.COMMON_LOOKUP_LAB_U2) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -796,11 +743,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.COMMON_LOOKUP_LAB_U2) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO common_lookup_lab
@@ -822,11 +766,8 @@ SQL> INSERT INTO common_lookup_lab
  17  , 1			   -- last_updated_by
  18  , SYSDATE			   -- last_update_date
  19  );
-INSERT INTO common_lookup_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.COMMON_LOOKUP_LAB_U2) violated 
 
+1 row created.
 
 SQL> 
 SQL> -- --------------------------------------------------------
@@ -866,23 +807,8 @@ COMMON_LOOKUP_LAB_ID COMMON_LOOKUP_LAB_CONT COMMON_LOOKUP_LA
                 1013 ITEM_LAB               PLAYSTATION2                        
                 1014 ITEM_LAB               XBOX                                
                 1015 ITEM_LAB               BLU-RAY                             
-                1016 CONTACT                EMPLOYEE                            
-                1017 CONTACT                CUSTOMER                            
-                1018 MEMBER                 INDIVIDUAL                          
-                1019 MEMBER                 GROUP                               
-                1020 MEMBER                 DISCOVER_CARD                       
-                1021 MEMBER                 MASTER_CARD                         
-                1022 MEMBER                 VISA_CARD                           
-                1025 ITEM                   DVD_FULL_SCREEN                     
-                1026 ITEM                   DVD_WIDE_SCREEN                     
-                1027 ITEM                   NINTENDO_GAMECUB                    
-                                            E                                   
-                                                                                
-                1028 ITEM                   PLAYSTATION2                        
-                1029 ITEM                   XBOX                                
-                1030 ITEM                   BLU-RAY                             
 
-33 rows selected.
+20 rows selected.
 
 SQL> 
 SQL> -- --------------------------------------------------------
@@ -907,6 +833,8 @@ COMMON_LOOKUP_LAB_ID
 --------------------                                                            
                    3                                                            
 
+1 row selected.
+
 SQL> 
 SQL> SELECT   common_lookup_lab_id
   2  FROM     common_lookup_lab
@@ -916,6 +844,8 @@ SQL> SELECT   common_lookup_lab_id
 COMMON_LOOKUP_LAB_ID                                                            
 --------------------                                                            
                    1                                                            
+
+1 row selected.
 
 SQL> 
 SQL> -- --------------------------------------------------------
@@ -953,7 +883,9 @@ SQL> SELECT   system_user_lab_id
    User User         Group    User                                              
    ID # Name          ID #    Type                                              
 ------- ---------- ------- -------                                              
-      1 SYSADMIN         1       3                                              
+      1 SYSADMIN         1 <Null>                                               
+
+1 row selected.
 
 SQL> 
 SQL> UPDATE system_user_lab
@@ -986,6 +918,8 @@ SQL> SELECT   system_user_lab_id
    ID # Name          ID #    Type                                              
 ------- ---------- ------- -------                                              
       1 SYSADMIN         1       3                                              
+
+1 row selected.
 
 SQL> 
 SQL> -- --------------------------------------------------------
@@ -1273,11 +1207,8 @@ SQL> INSERT INTO system_user_lab
  33    WHERE	system_user_lab_name = 'SYSADMIN')	   -- last_updated_by
  34  , SYSDATE					       -- last_update_date
  35  );
-INSERT INTO system_user_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.UQ_SYSTEM_USER_LAB_1) violated 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO system_user_lab
@@ -1313,11 +1244,8 @@ SQL> INSERT INTO system_user_lab
  31    WHERE	system_user_lab_name = 'SYSADMIN')	   -- last_updated_by
  32  , SYSDATE					       -- last_update_date
  33  );
-INSERT INTO system_user_lab
-*
-ERROR at line 1:
-ORA-00001: unique constraint (STUDENT.UQ_SYSTEM_USER_LAB_1) violated 
 
+1 row created.
 
 SQL> 
 SQL> -- --------------------------------------------------------
@@ -1349,6 +1277,8 @@ System   User System System
      1      1      3 SYSADMIN   <Null>                                          
   1001      2      3 DBA1       Barnum, Phineas Taylor                          
   1002      2      3 DBA2       Fogg, Phileas                                   
+
+3 rows selected.
 
 SQL> 
 SQL> -- Commit changes.

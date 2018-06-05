@@ -52,7 +52,7 @@ VALUES
 ,'2222-3333-4444-5555'                            -- credit_card_number
 ,(SELECT   common_lookup_lab_id
   FROM     common_lookup_lab
-  WHERE    common_lookup_lab_context = 'member_lab'
+  WHERE    common_lookup_lab_context = 'MEMBER_LAB'
   AND      common_lookup_lab_type = 'DISCOVER_CARD')  -- credit_card_type
 ,(SELECT   system_user_lab_id
   FROM     system_user_lab
@@ -82,7 +82,7 @@ VALUES
 , member_lab_s1.currval                               -- member_lab_id
 ,(SELECT   common_lookup_lab_id
   FROM     common_lookup_lab
-  WHERE    common_lookup_lab_context = 'contact_lab'
+  WHERE    common_lookup_lab_context = 'CONTACT_LAB'
   AND      common_lookup_lab_type = 'CUSTOMER')       -- contact_lab_type
 ,'Oscar'                                          -- first_name
 ,'Vizquel'                                        -- last_name
@@ -199,7 +199,7 @@ VALUES
 , member_lab_s1.currval                               -- member_lab_id
 ,(SELECT   common_lookup_lab_id
   FROM     common_lookup_lab
-  WHERE    common_lookup_lab_context = 'contact_lab'
+  WHERE    common_lookup_lab_context = 'CONTACT_LAB'
   AND      common_lookup_lab_type = 'CUSTOMER')       -- contact_lab_type
 ,'Doreen'                                         -- first_name
 ,'Vizquel'                                        -- last_name

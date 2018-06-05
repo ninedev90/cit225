@@ -96,7 +96,8 @@ SQL> SELECT   table_name
  15  WHERE    table_name = 'SYSTEM_USER_LAB'
  16  ORDER BY 2;
 
-Table Name       COLUMN_ID COLUMN_NAME            NULLABLE DATA_TYPE            
+                           Column                                               
+Table Name       COLUMN_ID Name                   NULLABLE DATA_TYPE            
 ---------------- --------- ---------------------- -------- ------------         
 SYSTEM_USER_LAB          1 SYSTEM_USER_LAB_ID     NOT NULL NUMBER(22)           
 SYSTEM_USER_LAB          2 SYSTEM_USER_LAB_NAME   NOT NULL VARCHAR2(20)         
@@ -272,7 +273,8 @@ SQL> SELECT   table_name
  15  WHERE    table_name = 'COMMON_LOOKUP_LAB'
  16  ORDER BY 2;
 
-Table Name       COLUMN_ID COLUMN_NAME            NULLABLE DATA_TYPE            
+                           Column                                               
+Table Name       COLUMN_ID Name                   NULLABLE DATA_TYPE            
 ---------------- --------- ---------------------- -------- ------------         
 COMMON_LOOKUP_LA         1 COMMON_LOOKUP_LAB_ID   NOT NULL NUMBER(22)           
 B                                                                               

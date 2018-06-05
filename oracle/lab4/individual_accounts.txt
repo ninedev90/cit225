@@ -22,14 +22,8 @@ SQL> BEGIN
  20  	 , pv_telephone_lab_number => '423-1234' );
  21  END;
  22  /
-  contact_lab_insert(
-  *
-ERROR at line 3:
-ORA-06550: line 3, column 3:
-PLS-00201: identifier 'CONTACT_LAB_INSERT' must be declared
-ORA-06550: line 3, column 3:
-PL/SQL: Statement ignored 
 
+PL/SQL procedure successfully completed.
 
 SQL> 
 SQL> -- Insert second contact_lab.
@@ -54,14 +48,8 @@ SQL> BEGIN
  19  	 , pv_telephone_lab_number => '423-1235' );
  20  END;
  21  /
-  contact_lab_insert(
-  *
-ERROR at line 3:
-ORA-06550: line 3, column 3:
-PLS-00201: identifier 'CONTACT_LAB_INSERT' must be declared
-ORA-06550: line 3, column 3:
-PL/SQL: Statement ignored 
 
+PL/SQL procedure successfully completed.
 
 SQL> 
 SQL> -- Insert third contact_lab.
@@ -87,14 +75,8 @@ SQL> BEGIN
  20  	 , pv_telephone_lab_number => '423-1236' );
  21  END;
  22  /
-  contact_lab_insert(
-  *
-ERROR at line 3:
-ORA-06550: line 3, column 3:
-PLS-00201: identifier 'CONTACT_LAB_INSERT' must be declared
-ORA-06550: line 3, column 3:
-PL/SQL: Statement ignored 
 
+PL/SQL procedure successfully completed.
 
 SQL> 
 SQL> -- Insert fourth contact_lab.
@@ -120,14 +102,8 @@ SQL> BEGIN
  20  	 , pv_telephone_lab_number => '423-1237' );
  21  END;
  22  /
-  contact_lab_insert(
-  *
-ERROR at line 3:
-ORA-06550: line 3, column 3:
-PLS-00201: identifier 'CONTACT_LAB_INSERT' must be declared
-ORA-06550: line 3, column 3:
-PL/SQL: Statement ignored 
 
+PL/SQL procedure successfully completed.
 
 SQL> 
 SQL> -- Insert fifth contact_lab.
@@ -153,14 +129,8 @@ SQL> BEGIN
  20  	 , pv_telephone_lab_number => '423-1238' );
  21  END;
  22  /
-  contact_lab_insert(
-  *
-ERROR at line 3:
-ORA-06550: line 3, column 3:
-PLS-00201: identifier 'CONTACT_LAB_INSERT' must be declared
-ORA-06550: line 3, column 3:
-PL/SQL: Statement ignored 
 
+PL/SQL procedure successfully completed.
 
 SQL> 
 SQL> -- ------------------------------------------------------------------

@@ -14,6 +14,9 @@
 -- ----------------------------------------------------------------------
 
 -- Add your lab here:
+-- Run the prior lab script.
+@/home/student/Data/cit225/oracle/lab2/apply_oracle_lab2.sql
+@/home/student/Data/cit225/oracle/lib2/preseed/preseed_oracle_store.sql
 
 -- Open log file.
 SPOOL apply_oracle_lab3.txt
@@ -29,7 +32,7 @@ AS "Step Number" FROM dual;
 -- ----------------------------------------------------------------------
 -- Objective #1: Setup preseed for _LAB tables 
 -- ----------------------------------------------------------------------
-@preseed_oracle_store_lab_tables
+@/home/student/Data/cit225/oracle/lab3/preseed_oracle_store_lab_tables.sql
 
 spool off
 

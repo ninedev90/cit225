@@ -1,5 +1,5 @@
 -- ------------------------------------------------------------------
---  Program Name:   group_account1.sql
+--  Program Name:   group_account3.sql
 --  Lab Assignment: N/A
 --  Program Author: Michael McLaughlin
 --  Creation Date:  30-Jan-2018
@@ -29,10 +29,10 @@
 -- ------------------------------------------------------------------
 --  Open log file.
 -- ------------------------------------------------------------------
-SPOOL group_account1.txt
+SPOOL group_account3.txt
 
 -- ------------------------------------------------------------------
---  Insert record set #1, with one entry in the member_lab table and
+--  Insert record set #3, with one entry in the member_lab table and
 --  two entries in contact_lab table.
 -- ------------------------------------------------------------------
 INSERT INTO member_lab
@@ -48,11 +48,11 @@ INSERT INTO member_lab
 VALUES
 ( member_lab_s1.nextval                               -- member_lab_id
 , NULL                                            -- member_lab_type
-,'B293-71445'                                     -- account_number
-,'1111-2222-3333-4444'                            -- credit_card_number
+,'B293-71447'                                     -- account_number
+,'3333-4444-5555-6666'                            -- credit_card_number
 ,(SELECT   common_lookup_lab_id
   FROM     common_lookup_lab
-  WHERE    common_lookup_lab_context = 'MEMBER_LAB'
+  WHERE    common_lookup_lab_context = 'member_lab'
   AND      common_lookup_lab_type = 'DISCOVER_CARD')  -- credit_card_type
 ,(SELECT   system_user_lab_id
   FROM     system_user_lab
@@ -82,10 +82,10 @@ VALUES
 , member_lab_s1.currval                               -- member_lab_id
 ,(SELECT   common_lookup_lab_id
   FROM     common_lookup_lab
-  WHERE    common_lookup_lab_context = 'CONTACT_LAB'
+  WHERE    common_lookup_lab_context = 'contact_lab'
   AND      common_lookup_lab_type = 'CUSTOMER')       -- contact_lab_type
-,'Randi'                                          -- first_name
-,'Winn'                                           -- last_name
+,'Meaghan'                                        -- first_name
+,'Sweeney'                                        -- last_name
 ,(SELECT   system_user_lab_id
   FROM     system_user_lab
   WHERE    system_user_lab_name = 'SYSADMIN')         -- created_by
@@ -137,7 +137,7 @@ INSERT INTO street_address_lab
  VALUES
 ( street_address_lab_s1.nextval                       -- street_address_lab_id
 , address_lab_s1.currval                              -- address_lab_id
-,'10 El Camino Real'                              -- street_address_lab
+,'14 El Camino Real'                              -- street_address_lab
 ,(SELECT   system_user_lab_id
   FROM     system_user_lab
   WHERE    system_user_lab_name = 'SYSADMIN')         -- created_by
@@ -168,9 +168,9 @@ INSERT INTO telephone_lab
   FROM     common_lookup_lab
   WHERE    common_lookup_lab_context = 'MULTIPLE'
   AND      common_lookup_lab_type = 'HOME')           -- telephone_lab_type
-,'001'                                            -- country_code
+,'USA'                                            -- country_code
 ,'408'                                            -- area_code
-,'111-1111'                                       -- telephone_lab_number
+,'333-3333'                                       -- telephone_lab_number
 ,(SELECT   system_user_lab_id
   FROM     system_user_lab
   WHERE    system_user_lab_name = 'SYSADMIN')         -- created_by
@@ -199,10 +199,10 @@ VALUES
 , member_lab_s1.currval                               -- member_lab_id
 ,(SELECT   common_lookup_lab_id
   FROM     common_lookup_lab
-  WHERE    common_lookup_lab_context = 'CONTACT_LAB'
+  WHERE    common_lookup_lab_context = 'contact_lab'
   AND      common_lookup_lab_type = 'CUSTOMER')       -- contact_lab_type
-,'Brian'                                          -- first_name
-,'Winn'                                           -- last_name
+,'Matthew'                                         -- first_name
+,'Sweeney'                                        -- last_name
 ,(SELECT   system_user_lab_id
   FROM     system_user_lab
   WHERE    system_user_lab_name = 'SYSADMIN')         -- created_by
@@ -255,7 +255,7 @@ INSERT INTO street_address_lab
  VALUES
 ( street_address_lab_s1.nextval                       -- street_address_lab_id
 , address_lab_s1.currval                              -- address_lab_id
-,'10 El Camino Real'                              -- street_address_lab
+,'14 El Camino Real'                              -- street_address_lab
 ,(SELECT   system_user_lab_id
   FROM     system_user_lab
   WHERE    system_user_lab_name = 'SYSADMIN')         -- created_by
@@ -286,9 +286,129 @@ INSERT INTO telephone_lab
   FROM     common_lookup_lab
   WHERE    common_lookup_lab_context = 'MULTIPLE'
   AND      common_lookup_lab_type = 'HOME')           -- telephone_lab_type
-,'001'                                            -- country_code
+,'USA'                                            -- country_code
 ,'408'                                            -- area_code
-,'111-1111'                                       -- telephone_lab_number
+,'333-3333'                                       -- telephone_lab_number
+,(SELECT   system_user_lab_id
+  FROM     system_user_lab
+  WHERE    system_user_lab_name = 'SYSADMIN')         -- created_by
+, SYSDATE                                         -- creation_date
+,(SELECT   system_user_lab_id
+  FROM     system_user_lab
+  WHERE    system_user_lab_name = 'SYSADMIN')         -- last_updated_by
+, SYSDATE                                         -- last_update_date
+);
+
+-- ------------------------------------------------------------------
+--  Insert third contact_lab in a group account user.
+-- ------------------------------------------------------------------
+INSERT INTO contact_lab
+( contact_lab_id
+, member_lab_id
+, contact_lab_type
+, first_name
+, middle_name
+, last_name
+, created_by
+, creation_date
+, last_updated_by
+, last_update_date )
+VALUES
+( contact_lab_s1.nextval                              -- contact_lab_id
+, member_lab_s1.currval                               -- member_lab_id
+,(SELECT   common_lookup_lab_id
+  FROM     common_lookup_lab
+  WHERE    common_lookup_lab_context = 'contact_lab'
+  AND      common_lookup_lab_type = 'CUSTOMER')       -- contact_lab_type
+,'Ian'                                            -- first_name
+,'M'                                              -- middle_name
+,'Sweeney'                                        -- last_name
+,(SELECT   system_user_lab_id
+  FROM     system_user_lab
+  WHERE    system_user_lab_name = 'SYSADMIN')         -- created_by
+, SYSDATE                                         -- creation_date
+,(SELECT   system_user_lab_id
+  FROM     system_user_lab
+  WHERE    system_user_lab_name = 'SYSADMIN')         -- last_updated_by
+, SYSDATE                                         -- last_update_date
+);
+
+
+INSERT INTO address_lab
+( address_lab_id
+, contact_lab_id
+, address_lab_type
+, city
+, state_province
+, postal_code
+, created_by
+, creation_date
+, last_updated_by
+, last_update_date )
+VALUES
+( address_lab_s1.nextval                              -- address_lab_id
+, contact_lab_s1.currval                              -- contact_lab_id
+,(SELECT   common_lookup_lab_id
+  FROM     common_lookup_lab
+  WHERE    common_lookup_lab_type = 'HOME')           -- address_lab_type
+,'San Jose'                                       -- city
+,'CA'                                             -- state_province
+,'95192'                                          -- postal_code
+,(SELECT   system_user_lab_id
+  FROM     system_user_lab
+  WHERE    system_user_lab_name = 'SYSADMIN')         -- created_by
+, SYSDATE                                         -- creation_date
+,(SELECT   system_user_lab_id
+  FROM     system_user_lab
+  WHERE    system_user_lab_name = 'SYSADMIN')         -- last_updated_by
+, SYSDATE                                         -- last_update_date
+);
+
+INSERT INTO street_address_lab
+( street_address_lab_id
+, address_lab_id
+, street_address_lab
+, created_by
+, creation_date
+, last_updated_by
+, last_update_date )
+ VALUES
+( street_address_lab_s1.nextval                       -- street_address_lab_id
+, address_lab_s1.currval                              -- address_lab_id
+,'14 El Camino Real'                              -- street_address_lab
+,(SELECT   system_user_lab_id
+  FROM     system_user_lab
+  WHERE    system_user_lab_name = 'SYSADMIN')         -- created_by
+, SYSDATE                                         -- creation_date
+,(SELECT   system_user_lab_id
+  FROM     system_user_lab
+  WHERE    system_user_lab_name = 'SYSADMIN')         -- last_updated_by
+, SYSDATE                                         -- last_update_date
+);
+
+INSERT INTO telephone_lab
+( telephone_lab_id
+, contact_lab_id
+, address_lab_id
+, telephone_lab_type
+, country_code
+, area_code
+, telephone_lab_number
+, created_by
+, creation_date
+, last_updated_by
+, last_update_date )
+ VALUES
+( telephone_lab_s1.nextval                            -- telephone_lab_id
+, address_lab_s1.currval                              -- address_lab_id
+, contact_lab_s1.currval                              -- contact_lab_id
+,(SELECT   common_lookup_lab_id
+  FROM     common_lookup_lab
+  WHERE    common_lookup_lab_context = 'MULTIPLE'
+  AND      common_lookup_lab_type = 'HOME')           -- telephone_lab_type
+,'USA'                                            -- country_code
+,'408'                                            -- area_code
+,'333-3333'                                       -- telephone_lab_number
 ,(SELECT   system_user_lab_id
   FROM     system_user_lab
   WHERE    system_user_lab_name = 'SYSADMIN')         -- created_by
@@ -316,10 +436,11 @@ FROM     member_lab m INNER JOIN contact_lab c ON m.member_lab_id = c.member_lab
          address_lab a ON c.contact_lab_id = a.contact_lab_id INNER JOIN
          street_address_lab sa ON a.address_lab_id = sa.address_lab_id INNER JOIN
          telephone_lab t ON c.contact_lab_id = t.contact_lab_id AND a.address_lab_id = t.address_lab_id
-WHERE    c.last_name = 'Winn';
+WHERE    c.last_name = 'Sweeney';
 
 -- ------------------------------------------------------------------
 --  Close log file.
 -- ------------------------------------------------------------------
 SPOOL OFF
+  
 

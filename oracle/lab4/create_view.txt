@@ -20,7 +20,16 @@ SQL> SELECT   m.member_lab_id
  10  ,	      cl.common_lookup_lab_type
  11  ORDER BY m.member_lab_id;
 
-no rows selected
+member_lab member_lab Common                                                    
+      ID #          # Lookup Type                                               
+---------- ---------- ------------                                              
+      1004          1 INDIVIDUAL                                                
+      1005          1 INDIVIDUAL                                                
+      1006          1 INDIVIDUAL                                                
+      1007          1 INDIVIDUAL                                                
+      1008          1 INDIVIDUAL                                                
+
+5 rows selected.
 
 SQL> 
 SQL> -- --------------------------------------------------------

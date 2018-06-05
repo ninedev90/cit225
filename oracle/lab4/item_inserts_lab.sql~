@@ -37,7 +37,7 @@ VALUES
 ,'9736-05640-4'
 ,(SELECT   common_lookup_lab_id
   FROM     common_lookup_lab
-  WHERE    common_lookup_lab_context = 'ITEM_LAB'
+  WHERE    common_lookup_lab_context = 'ITEM'
   AND      common_lookup_lab_type = 'DVD_WIDE_SCREEN')
 ,'The Hunt for Red October'
 ,'Special Collector''s Edition'

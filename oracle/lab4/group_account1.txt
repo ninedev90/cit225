@@ -20,7 +20,7 @@ SQL> INSERT INTO member_lab
  15  ,'1111-2222-3333-4444'			       -- credit_card_number
  16  ,(SELECT	common_lookup_lab_id
  17    FROM	common_lookup_lab
- 18    WHERE	common_lookup_lab_context = 'member_lab'
+ 18    WHERE	common_lookup_lab_context = 'MEMBER_LAB'
  19    AND	common_lookup_lab_type = 'DISCOVER_CARD')  -- credit_card_type
  20  ,(SELECT	system_user_lab_id
  21    FROM	system_user_lab
@@ -31,11 +31,8 @@ SQL> INSERT INTO member_lab
  26    WHERE	system_user_lab_name = 'SYSADMIN')	   -- last_updated_by
  27  , SYSDATE					       -- last_update_date
  28  );
-,(SELECT   common_lookup_lab_id
-           *
-ERROR at line 16:
-ORA-01400: cannot insert NULL into ("STUDENT"."MEMBER_LAB"."CREDIT_CARD_TYPE") 
 
+1 row created.
 
 SQL> 
 SQL> -- ------------------------------------------------------------------
@@ -56,7 +53,7 @@ SQL> INSERT INTO contact_lab
  13  , member_lab_s1.currval				   -- member_lab_id
  14  ,(SELECT	common_lookup_lab_id
  15    FROM	common_lookup_lab
- 16    WHERE	common_lookup_lab_context = 'contact_lab'
+ 16    WHERE	common_lookup_lab_context = 'CONTACT_LAB'
  17    AND	common_lookup_lab_type = 'CUSTOMER')	   -- contact_lab_type
  18  ,'Randi'					       -- first_name
  19  ,'Winn'					       -- last_name
@@ -69,11 +66,8 @@ SQL> INSERT INTO contact_lab
  26    WHERE	system_user_lab_name = 'SYSADMIN')	   -- last_updated_by
  27  , SYSDATE					       -- last_update_date
  28  );
-,(SELECT   common_lookup_lab_id
-           *
-ERROR at line 14:
-ORA-01400: cannot insert NULL into ("STUDENT"."CONTACT_LAB"."CONTACT_LAB_TYPE") 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO address_lab
@@ -105,12 +99,8 @@ SQL> INSERT INTO address_lab
  27    WHERE	system_user_lab_name = 'SYSADMIN')	   -- last_updated_by
  28  , SYSDATE					       -- last_update_date
  29  );
-INSERT INTO address_lab
-*
-ERROR at line 1:
-ORA-02291: integrity constraint (STUDENT.FK_ADDRESS_LAB_1) violated - parent
-key not found 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO street_address_lab
@@ -134,12 +124,8 @@ SQL> INSERT INTO street_address_lab
  19    WHERE	system_user_lab_name = 'SYSADMIN')	   -- last_updated_by
  20  , SYSDATE					       -- last_update_date
  21  );
-INSERT INTO street_address_lab
-*
-ERROR at line 1:
-ORA-02291: integrity constraint (STUDENT.FK_S_ADDRESS_LAB_1) violated - parent
-key not found 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO telephone_lab
@@ -174,12 +160,8 @@ SQL> INSERT INTO telephone_lab
  30    WHERE	system_user_lab_name = 'SYSADMIN')	   -- last_updated_by
  31  , SYSDATE					       -- last_update_date
  32  );
-INSERT INTO telephone_lab
-*
-ERROR at line 1:
-ORA-02291: integrity constraint (STUDENT.FK_TELEPHONE_LAB_1) violated - parent
-key not found 
 
+1 row created.
 
 SQL> 
 SQL> -- ------------------------------------------------------------------
@@ -200,7 +182,7 @@ SQL> INSERT INTO contact_lab
  13  , member_lab_s1.currval				   -- member_lab_id
  14  ,(SELECT	common_lookup_lab_id
  15    FROM	common_lookup_lab
- 16    WHERE	common_lookup_lab_context = 'contact_lab'
+ 16    WHERE	common_lookup_lab_context = 'CONTACT_LAB'
  17    AND	common_lookup_lab_type = 'CUSTOMER')	   -- contact_lab_type
  18  ,'Brian'					       -- first_name
  19  ,'Winn'					       -- last_name
@@ -213,11 +195,8 @@ SQL> INSERT INTO contact_lab
  26    WHERE	system_user_lab_name = 'SYSADMIN')	   -- last_updated_by
  27  , SYSDATE					       -- last_update_date
  28  );
-,(SELECT   common_lookup_lab_id
-           *
-ERROR at line 14:
-ORA-01400: cannot insert NULL into ("STUDENT"."CONTACT_LAB"."CONTACT_LAB_TYPE") 
 
+1 row created.
 
 SQL> 
 SQL> 
@@ -250,12 +229,8 @@ SQL> INSERT INTO address_lab
  27    WHERE	system_user_lab_name = 'SYSADMIN')	   -- last_updated_by
  28  , SYSDATE					       -- last_update_date
  29  );
-INSERT INTO address_lab
-*
-ERROR at line 1:
-ORA-02291: integrity constraint (STUDENT.FK_ADDRESS_LAB_1) violated - parent
-key not found 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO street_address_lab
@@ -279,12 +254,8 @@ SQL> INSERT INTO street_address_lab
  19    WHERE	system_user_lab_name = 'SYSADMIN')	   -- last_updated_by
  20  , SYSDATE					       -- last_update_date
  21  );
-INSERT INTO street_address_lab
-*
-ERROR at line 1:
-ORA-02291: integrity constraint (STUDENT.FK_S_ADDRESS_LAB_1) violated - parent
-key not found 
 
+1 row created.
 
 SQL> 
 SQL> INSERT INTO telephone_lab
@@ -319,12 +290,8 @@ SQL> INSERT INTO telephone_lab
  30    WHERE	system_user_lab_name = 'SYSADMIN')	   -- last_updated_by
  31  , SYSDATE					       -- last_update_date
  32  );
-INSERT INTO telephone_lab
-*
-ERROR at line 1:
-ORA-02291: integrity constraint (STUDENT.FK_TELEPHONE_LAB_1) violated - parent
-key not found 
 
+1 row created.
 
 SQL> 
 SQL> COL account_number  FORMAT A10  HEADING "Account|Number"
@@ -346,7 +313,13 @@ SQL> SELECT   m.account_number
  12  	      telephone_lab t ON c.contact_lab_id = t.contact_lab_id AND a.address_lab_id = t.address_lab_id
  13  WHERE    c.last_name = 'Winn';
 
-no rows selected
+Account    Name                                                                 
+Number     (Last, First MI) City         State      telephone_lab               
+---------- ---------------- ------------ ---------- ------------------          
+B293-71445 Winn, Randi      San Jose     CA         001-(408) 111-1111          
+B293-71445 Winn, Brian      San Jose     CA         001-(408) 111-1111          
+
+2 rows selected.
 
 SQL> 
 SQL> -- ------------------------------------------------------------------
