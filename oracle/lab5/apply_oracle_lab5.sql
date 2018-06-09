@@ -20,10 +20,10 @@
 -- ----------------------------------------------------------------------
 
 -- Run the prior lab script.
-@/home/student/Data/cit225/oracle/lib/cleanup_oracle.sql
-@/home/student/Data/cit225/oracle/lib2/create/create_oracle_store2.sql
-@/home/student/Data/cit225/oracle/lib2/preseed/preseed_oracle_store.sql
-@/home/student/Data/cit225/oracle/lib2/seed/seeding.sql
+-- @/home/student/Data/cit225/oracle/lib/cleanup_oracle.sql
+-- @/home/student/Data/cit225/oracle/lib2/create/create_oracle_store2.sql
+-- @/home/student/Data/cit225/oracle/lib2/preseed/preseed_oracle_store.sql
+-- @/home/student/Data/cit225/oracle/lib2/seed/seeding.sql
  
 SPOOL apply_oracle_lab5.txt
  
@@ -31,89 +31,154 @@ SPOOL apply_oracle_lab5.txt
   1 [16 points] Write INNER JOIN queries that use the USING subclause 
     and return the following results:
 
-  a.  Display the MEMBER_ID and CONTACT_ID in the SELECT clause from a join
-      of the MEMBER and CONTACT tables. You should make the join with the
-      USING subclause based on the MEMBER_ID column, which is the 
+  a.  Display the  member_lab_ID and  contact_lab_ID in the SELECT clause from a join
+      of the  member_lab and  contact_lab tables. You should make the join with the
+      USING subclause based on the  member_lab_ID column, which is the 
       primary and foreign key of the respective tables. 
 */
-SELECT m.member_id, c.contact_id
-FROM member as m 
-INNER JOIN contact as c USING(member_id);
+SELECT m. member_lab_id, c. contact_lab_id
+FROM  member_lab m 
+INNER JOIN  contact_lab c USING (member_lab_id);
 
 /**
-b. Display the MEMBER_ID and CONTACT_ID in the SELECT clause from a join of the 
-MEMBER and CONTACT tables. You should put the join in the WHERE clause and base 
-the join on the MEMBER_ID column, which is the primary and foreign key of the
+b. Display the  member_lab_ID and  contact_lab_ID in the SELECT clause from a join of the 
+ member_lab and  contact_lab tables. You should put the join in the WHERE clause and base 
+the join on the  member_lab_ID column, which is the primary and foreign key of the
 respective tables.
 */
-SELECT m.member_id, c.contact_id
-FROM member as m, contact as c
-WHERE m.member_id = c.member_id;
+SELECT m. member_lab_id, c. contact_lab_id
+FROM  member_lab m,  contact_lab c
+WHERE m. member_lab_id = c. member_lab_id;
 
 /*
-c. Display the CONTACT_ID and ADDRESS_ID in the SELECT clause from a join of the 
-CONTACT and ADDRESS tables. You should put the join in the WHERE clause and base
-the join on the CONTACT_ID column, which is the primary and foreign key of the
+c. Display the  contact_lab_ID and address_lab_ID in the SELECT clause from a join of the 
+ contact_lab and address_lab tables. You should put the join in the WHERE clause and base
+the join on the  contact_lab_ID column, which is the primary and foreign key of the
 respective tables.
 */
-SELECT c.contact_id, a.address_id
-FROM contact as c
-INNER JOIN adress as a USING(contact_id);
+SELECT c.contact_lab_id, a.address_lab_id
+FROM  contact_lab c
+INNER JOIN address_lab a USING (contact_lab_id);
 
 /*
-d. Display the CONTACT_ID and ADDRESS_ID in the SELECT clause from a join of the 
-CONTACT and ADDRESS tables. You should put the join in the WHERE clause and base
-the join on the CONTACT_ID column, which is the primary and foreign key of the
+d. Display the  contact_lab_ID and address_lab_ID in the SELECT clause from a join of the 
+ contact_lab and address_lab tables. You should put the join in the WHERE clause and base
+the join on the  contact_lab_ID column, which is the primary and foreign key of the
 respective tables.
 */
-SELECT c.contact_id, a.address_id
-FROM contact as c, adress as a
-where c.contact_id = a.contact.id;
+SELECT c.contact_lab_id, a.address_lab_id
+FROM  contact_lab c, address_lab a
+where c.contact_lab_id = a.contact_lab_id;
 
 /*
-e. Display the ADDRESS_ID and STREET_ADDRESS_ID in the SELECT clause from a join 
-of the ADDRESS and STREET_ADDRESS tables. You should make the join between the 
-tables with the USING subclause based on the ADDRESS_ID column, which is the 
+e. Display the address_lab_ID and STREET_address_lab_ID in the SELECT clause from a join 
+of the address_lab and STREET_address_lab tables. You should make the join between the 
+tables with the USING subclause based on the address_lab_ID column, which is the 
 primary and foreign key of the respective tables.
 */
  
- SELECT a.address_id, s.street_address_id
- FROM adress as a 
- INNER JOIN street_address as s USING (address_id);
+ SELECT a.address_lab_id, s.street_address_lab_id
+ FROM address_lab a 
+ INNER JOIN street_address_lab s USING (address_lab_id);
 
  /*
- f. Display the ADDRESS_ID and STREET_ADDRESS_ID in the SELECT clause from a join 
- of the ADDRESS and STREET_ADDRESS tables. You should put the join in the WHERE 
- clause and base the join on the ADDRESS_ID column, which is the primary and 
+ f. Display the address_lab_ID and STREET_address_lab_ID in the SELECT clause from a join 
+ of the address_lab and STREET_address_lab tables. You should put the join in the WHERE 
+ clause and base the join on the address_lab_ID column, which is the primary and 
  foreign key of the respective tables.
  */
- SELECT a.address_id, s.street_address_id
- FROM adress as a, street_address as s
- WHERE s.address_id = a.address_id;
+ SELECT a.address_lab_id, s.street_address_lab_id
+ FROM address_lab a, street_address_lab s
+ WHERE s.address_lab_id = a.address_lab_id;
 
  /**
- g. Display the CONTACT_ID and TELEPHONE_ID in the SELECT clause from a join of 
- the CONTACT and TELEPHONE tables. You should make the join between the tables 
- with the USING subclause based on the CONTACT_ID column, which is the primary 
+ g. Display the  contact_lab_ID and telephone_lab_ID in the SELECT clause from a join of 
+ the  contact_lab and telephone_lab tables. You should make the join between the tables 
+ with the USING subclause based on the  contact_lab_ID column, which is the primary 
  and foreign key of the respect tables.
  */
-SELECT c.contact_id, t.telephone_id
-FROM contact as id
-INNER JOIN telephone as t USING(contat_id);
+SELECT c.contact_lab_id, t.telephone_lab_id
+FROM  contact_lab c
+INNER JOIN telephone_lab t USING(contat_id);
+
  /*
- h.Display the CONTACT_ID and TELEPHONE_ID in the SELECT clause from a join of 
- the CONTACT and TELEPHONE tables. You should put the join in the WHERE clause 
- and base the join on the CONTACT_ID column, which is the primary and foreign 
+ h.Display the  contact_lab_ID and telephone_lab_ID in the SELECT clause from a join of 
+ the  contact_lab and telephone_lab tables. You should put the join in the WHERE clause 
+ and base the join on the  contact_lab_ID column, which is the primary and foreign 
  key of the respective tables.
  */
- SELECT c.contact_id, t.telephone_id
- FROM contact as id, telephone as t 
+ SELECT c.contact_lab_id, t.telephone_lab_id
+ FROM  contact_lab c, telephone_lab t 
  WHERE c.contat_id = t.contat_id;
 
 ---------------------------------------------------------------------------------------------
  --2. [8 points] Write INNER JOIN queries that use the ON subclause and return the following results:
 
  /*
+ a. Display the CONTACT_ID and SYSTEM_USER_ID columns in the SELECT clause from a join of the
+ CONTACT and SYSTEM_USER tables. You should make the join with the ON subclause based on the 
+ CREATED_BY and SYSTEM_USER_ID columns, which are the foreign and primary key respectively.
+*/
+COL contact_id        FORMAT 999999  HEADING "Contact|ID #|--------|Table #1"
+COL system_user_id    FORMAT 999999  HEADING "System|User|ID #|--------|Table #2"
+SELECT 
+  c.contact_lab_id contact_id, 
+  s.system_user_lab_id system_user_id
+FROM contact_lab c 
+INNER JOIN system_user_lab s ON s.system_user_lab_id = c.created_by
+
+/*
+b. Display the CONTACT_ID and SYSTEM_USER_ID columns in the SELECT clause from a 
+join of the CONTACT and SYSTEM_USER tables. You should put the join in the WHERE 
+clause and base the join on the CREATED_BY column, which is the primary and 
+foreign key of the respective tables.
+*/
+COL contact_id        FORMAT 999999  HEADING "Contact|ID #|--------|Table #1"
+COL system_user_id    FORMAT 999999  HEADING "System|User|ID #|--------|Table #2"
+SELECT 
+  c.contact_lab_id contact_id, 
+  s.system_user_lab_id system_user_id
+FROM contact_lab c, system_user_lab s
+WHERE s.system_user_lab_id = c.created_by
+
+/*
+c.Display the CONTACT_ID and SYSTEM_USER_ID columns in the SELECT clause from a 
+join of the CONTACT and SYSTEM_USER tables. You should make the join with the 
+ON subclause based on the LAST_UPDATED_BY and SYSTEM_USER_ID columns, which are 
+the foreign and primary key respectively.:
+*/
+COL contact_id        FORMAT 999999  HEADING "Contact|ID #|--------|Table #1"
+COL system_user_id    FORMAT 999999  HEADING "System|User|ID #|--------|Table #2"
+SELECT 
+  c.contact_lab_id contact_id, 
+  s.system_user_lab_id system_user_id
+FROM contact_lab c
+INNER JOIN system_user_lab s ON s.system_user_lab_id = c.last_updated_by
+
+/*
+d. Display the CONTACT_ID and SYSTEM_USER_ID columns in the SELECT clause from a 
+join of the CONTACT and SYSTEM_USER tables. You should put the join in the WHERE 
+clause and base the join on the LAST_UPDATED_BY and SYSTEM_USER_ID columns, which 
+are the foreign and primary key respectively.:
+*/
+COL contact_id        FORMAT 999999  HEADING "Contact|ID #|--------|Table #1"
+COL system_user_id    FORMAT 999999  HEADING "System|User|ID #|--------|Table #2"
+SELECT 
+  c.contact_lab_id contact_id, 
+  s.system_user_lab_id system_user_id
+FROM contact_lab c, system_user_lab s
+WHERE s.system_user_lab_id = c.last_updated_by;
+
+/*
+3. [8 points] Write INNER JOIN queries that use the ON subclause to perform a self-join
+  on the SYSTEM_USER table. The solution requires that you create three copies of the 
+  SYSTEM_USER table by using aliases like su1, su2, and su3. Please note that joining two
+  tables is like matching two sets, while joining three table is like joining two tables
+  into a temporary result set (or pseudo table) and then joining the third table to the
+  temporary result set if it were a table.
+*/
+
+/*
  a. [2 points]Display the SYSTEM_USER_ID and CREATED_BY columns from one row, 
  and the SYSTEM_USER_ID column from a row where it is also the primary key. 
  You should make the join with the ON subclause based on the CREATED_BY and 
@@ -123,9 +188,12 @@ INNER JOIN telephone as t USING(contat_id);
 COL system_user_id  FORMAT 999999  HEADING "System|User|ID #|--------|Table #1"
 COL created_by      FORMAT 999999  HEADING "Created|By|ID #|--------|Table #1"
 COL system_user_pk  FORMAT 999999  HEADING "System|User|ID #|--------|Table #2"
-SELECT su_t1.system_user_id, su_t1.created_by, su_t2.system_user_id as system_user_pk
-FROM system_user as su_t1 
-INNER JOIN system_user as su_t2 ON su_t1.created_by = su_t2.system_user_id;
+SELECT 
+  su_t1.system_user_id, 
+  su_t1.created_by, 
+  su_t2.system_user_id system_user_pk
+FROM system_user_lab su_t1 
+INNER JOIN system_user_lab su_t2 ON su_t1.created_by = su_t2.system_user_id;
 
 /*
 b. [2 points]Display the SYSTEM_USER_ID and LAST_UPDATED_BY columns from one row, 
@@ -137,9 +205,12 @@ In a self-join, these columns may be in the same or different rows in the table.
 COL system_user_id   FORMAT 999999  HEADING "System|User|ID #|--------|Table #1"
 COL last_updated_by  FORMAT 999999  HEADING "Last|Updated|By|ID #|--------|Table #1"
 COL system_user_pk   FORMAT 999999  HEADING "System|User|ID #|--------|Table #2"
-SELECT su_t1.system_user_id, su_t1.last_updated_by, su_t2.system_user_id as system_user_pk
-FROM system_user as su_t1 
-INNER JOIN system_user as su_t2 ON su_t1.last_updated_by = su_t2.system_user_id;
+SELECT 
+  su_t1.system_user_lab_id system_user_id, 
+  su_t1.last_updated_by, 
+  su_t2.system_user_lab_id system_user_pk
+FROM system_user_lab su_t1 
+INNER JOIN system_user_lab su_t2 ON su_t1.last_updated_by = su_t2.system_user_lab_id;
 
 /*
 c. [4 points] Display the SYSTEM_USER_ID and SYSTEM_USER_NAME columns from the 
@@ -153,27 +224,34 @@ COL cby_user_name  FORMAT A8      HEADING "System|User|Name|--------|Table #2"
 COL lby_user_id    FORMAT 999999  HEADING "System|User|ID #|--------|Table #3"
 COL lby_user_name  FORMAT A8      HEADING "System|User|Name|--------|Table #3"
 SELECT 
-   su_t1.system_user_id as user_id, 
-   su_t1.system_user_name as user_name, 
-   su_t2.system_user_id as cby_user_id,
-   su_t2.system_user_name as cby_user_name,
-   su_t3.system_user_id as lby_user_id,
-   su_t3.system_user_name as lby_user_name
-FROM system_user as su_t1 
-INNER JOIN system_user as su_t2 ON su_t1.created_by = su_t2.system_user_id
-INNER JOIN system_user as su_t3 ON su_t1.last_updated_by = su_t3.system_user_id;
+   su_t1.system_user_lab_id user_id, 
+   su_t1.system_user_ab_name user_name, 
+   su_t2.system_user_lab_id cby_user_id,
+   su_t2.system_user_lab_name cby_user_name,
+   su_t3.system_user_lab_id lby_user_id,
+   su_t3.system_user_lab_name lby_user_name
+FROM system_user_lab su_t1 
+INNER JOIN system_user_lab su_t2 ON su_t1.created_by = su_t2.system_user_lab_id
+INNER JOIN system_user_lab su_t3 ON su_t1.last_updated_by = su_t3.system_user_lab_id;
 
 /*---------------------------------------------------------------------------------
-4. [8 points] Display the RENTAL_ID column from the RENTAL table, the RENTAL_ID and
- ITEM_ID from the RENTAL_ITEM table, and ITEM_ID column from the ITEM table. You 
- should make a join from the RENTAL table to the RENTAL_ITEM table, and then the ITEM 
+4. [8 points] Display the rental_lab_ID column from the rental_lab table, the rental_lab_ID and
+ item_lab_ID from the rental_item_lab table, and item_lab_ID column from the item_lab table. You 
+ should make a join from the rental_lab table to the rental_item_lab table, and then the item_lab 
  table. Join the tables based on their respective primary and foreign key values.
  */
-
- SELECT r.rental_id, ri.rental_id, ri.item_id, i.item_id
- FROM rental r
- INNER JOIN rental_item ri USING (rental_id)
- INNER JOIN item i USING (item_id);
+COL rental_lab_id     FORMAT 999999  HEADING "Rental|Table|--------|Rental|ID #|--------|Table #1"
+COL rental_lab_id_fk  FORMAT 999999  HEADING "Rental Item|Table|--------|Rental|ID #|--------|Table #2"
+COL item_lab_id_fk    FORMAT 999999  HEADING "Rental Item|Table|--------|Rental|ID #|--------|Table #2"
+COL item_lab_id       FORMAT 999999  HEADING "Item|Table|--------|Rental|ID #|--------|Table #3"
+SELECT 
+  r.rental_lab_id, 
+  ri.rental_lab_id, 
+  ri.item_lab_id, 
+  i.item_lab_id
+FROM rental_lab r
+INNER JOIN rental_item_lab ri USING (rental_lab_id)
+INNER JOIN item_lab i USING (item_lab_id);
 
  /*
  ------------------------------------------------------------------------------------
@@ -303,7 +381,7 @@ DECLARE
     /* Select a random number between 1 and 5 and assign it to a local variable. */
     SELECT CASE
              WHEN num = 0 THEN 5 ELSE num
-           END AS random_key
+           END random_key
     INTO   lv_return_value
     FROM   (SELECT ROUND(dbms_random.VALUE(1,1000)/100/2,0) num FROM dual) il;
  
@@ -374,7 +452,7 @@ COL end_date    FORMAT A9 HEADING "End|Date"
 SELECT * FROM mock_calendar;
 
 SELECT   d.department_name
-,        ROUND(AVG(s.salary),0) AS salary
+,        ROUND(AVG(s.salary),0) salary
 FROM     employee e INNER JOIN department d
 ON       e.department_id = d.department_id INNER JOIN salary s
 ON       e.salary_id = s.salary_id
