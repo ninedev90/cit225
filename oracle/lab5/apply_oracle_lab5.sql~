@@ -255,8 +255,6 @@ FROM rental_lab r
 INNER JOIN rental_item_lab ri USING (rental_lab_id)
 INNER JOIN item_lab i USING (item_lab_id);
  
--- the step 5 has an error in the instruction script and I could not finish it
-
 SPOOL OFF
 
 -- ------------------------------------------------------------------

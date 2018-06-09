@@ -1,0 +1,461 @@
+SQL> 
+SQL>  /*-------------------------------------------------------------------------
+>   1 [16 points] Write INNER JOIN queries that use the USING subclause
+SQL> 	 and return the following results:
+SQL> 
+SQL>   a.  Display the	member_lab_ID and  contact_lab_ID in the SELECT clause from a join
+SQL> 	   of the  member_lab and  contact_lab tables. You should make the join with the
+SQL> 	   USING subclause based on the  member_lab_ID column, which is the
+SQL> 	   primary and foreign key of the respective tables.
+SQL> */
+SQL> SELECT
+  2  	     member_lab_id,
+  3  	     c. contact_lab_id
+  4  FROM  member_lab m
+  5  INNER JOIN  contact_lab c USING (member_lab_id);
+
+Member                                                                          
+  ID # CONTACT_LAB_ID                                                           
+------ --------------                                                           
+  1001           1001                                                           
+  1001           1002                                                           
+  1002           1003                                                           
+  1002           1004                                                           
+  1003           1005                                                           
+  1003           1006                                                           
+  1003           1007                                                           
+  1004           1008                                                           
+  1005           1009                                                           
+  1006           1010                                                           
+  1007           1011                                                           
+  1008           1012                                                           
+
+12 rows selected.
+
+SQL> 
+SQL> /**
+SQL> b. Display the  member_lab_ID and	contact_lab_ID in the SELECT clause from a join of the
+SQL>  member_lab and  contact_lab tables. You should put the join in the WHERE clause and base
+SQL> the join on the  member_lab_ID column, which is the primary and foreign key of the
+SQL> respective tables.
+SQL> */
+SQL> SELECT m.member_lab_id, c.contact_lab_id
+  2  FROM  member_lab m,  contact_lab c
+  3  WHERE m.member_lab_id = c.member_lab_id;
+
+Member                                                                          
+  ID # CONTACT_LAB_ID                                                           
+------ --------------                                                           
+  1001           1001                                                           
+  1001           1002                                                           
+  1002           1003                                                           
+  1002           1004                                                           
+  1003           1005                                                           
+  1003           1006                                                           
+  1003           1007                                                           
+  1004           1008                                                           
+  1005           1009                                                           
+  1006           1010                                                           
+  1007           1011                                                           
+  1008           1012                                                           
+
+12 rows selected.
+
+SQL> 
+SQL> /*
+SQL> c. Display the  contact_lab_ID and address_lab_ID in the SELECT clause from a join of the
+SQL>  contact_lab and address_lab tables. You should put the join in the WHERE clause and base
+SQL> the join on the  contact_lab_ID column, which is the primary and foreign key of the
+SQL> respective tables.
+SQL> */
+SQL> SELECT contact_lab_id, a.address_lab_id
+  2  FROM  contact_lab c
+  3  INNER JOIN address_lab a USING (contact_lab_id);
+
+CONTACT_LAB_ID ADDRESS_LAB_ID                                                   
+-------------- --------------                                                   
+          1001           1001                                                   
+          1002           1002                                                   
+          1003           1003                                                   
+          1004           1004                                                   
+          1005           1005                                                   
+          1006           1006                                                   
+          1007           1007                                                   
+          1008           1008                                                   
+          1009           1009                                                   
+          1010           1010                                                   
+          1011           1011                                                   
+          1012           1012                                                   
+
+12 rows selected.
+
+SQL> 
+SQL> /*
+SQL> d. Display the  contact_lab_ID and address_lab_ID in the SELECT clause from a join of the
+SQL>  contact_lab and address_lab tables. You should put the join in the WHERE clause and base
+SQL> the join on the  contact_lab_ID column, which is the primary and foreign key of the
+SQL> respective tables.
+SQL> */
+SQL> SELECT c.contact_lab_id, a.address_lab_id
+  2  FROM  contact_lab c, address_lab a
+  3  where c.contact_lab_id = a.contact_lab_id;
+
+CONTACT_LAB_ID ADDRESS_LAB_ID                                                   
+-------------- --------------                                                   
+          1001           1001                                                   
+          1002           1002                                                   
+          1003           1003                                                   
+          1004           1004                                                   
+          1005           1005                                                   
+          1006           1006                                                   
+          1007           1007                                                   
+          1008           1008                                                   
+          1009           1009                                                   
+          1010           1010                                                   
+          1011           1011                                                   
+          1012           1012                                                   
+
+12 rows selected.
+
+SQL> 
+SQL> /*
+SQL> e. Display the address_lab_ID and STREET_address_lab_ID in the SELECT clause from a join
+SQL> of the address_lab and STREET_address_lab tables. You should make the join between the
+SQL> tables with the USING subclause based on the address_lab_ID column, which is the
+SQL> primary and foreign key of the respective tables.
+SQL> */
+SQL> 
+SQL>  SELECT address_lab_id, s.street_address_lab_id
+  2   FROM address_lab a
+  3   INNER JOIN street_address_lab s USING (address_lab_id);
+
+ADDRESS_LAB_ID STREET_ADDRESS_LAB_ID                                            
+-------------- ---------------------                                            
+          1001                  1001                                            
+          1002                  1002                                            
+          1003                  1003                                            
+          1004                  1004                                            
+          1005                  1005                                            
+          1006                  1006                                            
+          1007                  1007                                            
+          1008                  1008                                            
+          1009                  1009                                            
+          1010                  1010                                            
+          1011                  1011                                            
+          1012                  1012                                            
+
+12 rows selected.
+
+SQL> 
+SQL>  /*
+SQL>  f. Display the address_lab_ID and STREET_address_lab_ID in the SELECT clause from a join
+SQL>  of the address_lab and STREET_address_lab tables. You should put the join in the WHERE
+SQL>  clause and base the join on the address_lab_ID column, which is the primary and
+SQL>  foreign key of the respective tables.
+SQL>  */
+SQL>  SELECT a.address_lab_id, s.street_address_lab_id
+  2   FROM address_lab a, street_address_lab s
+  3   WHERE s.address_lab_id = a.address_lab_id;
+
+ADDRESS_LAB_ID STREET_ADDRESS_LAB_ID                                            
+-------------- ---------------------                                            
+          1001                  1001                                            
+          1002                  1002                                            
+          1003                  1003                                            
+          1004                  1004                                            
+          1005                  1005                                            
+          1006                  1006                                            
+          1007                  1007                                            
+          1008                  1008                                            
+          1009                  1009                                            
+          1010                  1010                                            
+          1011                  1011                                            
+          1012                  1012                                            
+
+12 rows selected.
+
+SQL> 
+SQL>  /**
+SQL>  g. Display the  contact_lab_ID and telephone_lab_ID in the SELECT clause from a join of
+SQL>  the  contact_lab and telephone_lab tables. You should make the join between the tables
+SQL>  with the USING subclause based on the  contact_lab_ID column, which is the primary
+SQL>  and foreign key of the respect tables.
+SQL>  */
+SQL> SELECT contact_lab_id, t.telephone_lab_id
+  2  FROM  contact_lab c
+  3  INNER JOIN telephone_lab t USING(contact_lab_id);
+
+CONTACT_LAB_ID TELEPHONE_LAB_ID                                                 
+-------------- ----------------                                                 
+          1001             1001                                                 
+          1002             1002                                                 
+          1003             1003                                                 
+          1004             1004                                                 
+          1005             1005                                                 
+          1006             1006                                                 
+          1007             1007                                                 
+          1008             1008                                                 
+          1009             1009                                                 
+          1010             1010                                                 
+          1011             1011                                                 
+          1012             1012                                                 
+
+12 rows selected.
+
+SQL> 
+SQL>  /*
+SQL>  h.Display the  contact_lab_ID and telephone_lab_ID in the SELECT clause from a join of
+SQL>  the  contact_lab and telephone_lab tables. You should put the join in the WHERE clause
+SQL>  and base the join on the	contact_lab_ID column, which is the primary and foreign
+SQL>  key of the respective tables.
+SQL>  */
+SQL>  SELECT c.contact_lab_id, t.telephone_lab_id
+  2   FROM  contact_lab c, telephone_lab t
+  3   WHERE c.contact_lab_id = t.contact_lab_id;
+
+CONTACT_LAB_ID TELEPHONE_LAB_ID                                                 
+-------------- ----------------                                                 
+          1001             1001                                                 
+          1002             1002                                                 
+          1003             1003                                                 
+          1004             1004                                                 
+          1005             1005                                                 
+          1006             1006                                                 
+          1007             1007                                                 
+          1008             1008                                                 
+          1009             1009                                                 
+          1010             1010                                                 
+          1011             1011                                                 
+          1012             1012                                                 
+
+12 rows selected.
+
+SQL> 
+SQL> ---------------------------------------------------------------------------------------------
+SQL>  --2. [8 points] Write INNER JOIN queries that use the ON subclause and return the following results:
+SQL> 
+SQL>  /*
+SQL>  a. Display the CONTACT_ID and SYSTEM_USER_ID columns in the SELECT clause from a join of the
+SQL>  CONTACT and SYSTEM_USER tables. You should make the join with the ON subclause based on the
+SQL>  CREATED_BY and SYSTEM_USER_ID columns, which are the foreign and primary key respectively.
+SQL> */
+SQL> COL contact_id	   FORMAT 999999  HEADING "Contact|ID #|--------|Table #1"
+SQL> COL system_user_id    FORMAT 999999  HEADING "System|User|ID #|--------|Table #2"
+SQL> SELECT
+  2    c.contact_lab_id contact_id,
+  3    s.system_user_lab_id system_user_id
+  4  FROM contact_lab c
+  5  INNER JOIN system_user_lab s ON s.system_user_lab_id = c.created_by
+  6  
+SQL> /*
+SQL> b. Display the CONTACT_ID and SYSTEM_USER_ID columns in the SELECT clause from a
+SQL> join of the CONTACT and SYSTEM_USER tables. You should put the join in the WHERE
+SQL> clause and base the join on the CREATED_BY column, which is the primary and
+SQL> foreign key of the respective tables.
+SQL> */
+SQL> COL contact_id	   FORMAT 999999  HEADING "Contact|ID #|--------|Table #1"
+SQL> COL system_user_id    FORMAT 999999  HEADING "System|User|ID #|--------|Table #2"
+SQL> SELECT
+  2    c.contact_lab_id contact_id,
+  3    s.system_user_lab_id system_user_id
+  4  FROM contact_lab c, system_user_lab s
+  5  WHERE s.system_user_lab_id = c.created_by
+  6  
+SQL> /*
+SQL> c.Display the CONTACT_ID and SYSTEM_USER_ID columns in the SELECT clause from a
+SQL> join of the CONTACT and SYSTEM_USER tables. You should make the join with the
+SQL> ON subclause based on the LAST_UPDATED_BY and SYSTEM_USER_ID columns, which are
+SQL> the foreign and primary key respectively.:
+SQL> */
+SQL> COL contact_id	   FORMAT 999999  HEADING "Contact|ID #|--------|Table #1"
+SQL> COL system_user_id    FORMAT 999999  HEADING "System|User|ID #|--------|Table #2"
+SQL> SELECT
+  2    c.contact_lab_id contact_id,
+  3    s.system_user_lab_id system_user_id
+  4  FROM contact_lab c
+  5  INNER JOIN system_user_lab s ON s.system_user_lab_id = c.last_updated_by
+  6  
+SQL> /*
+SQL> d. Display the CONTACT_ID and SYSTEM_USER_ID columns in the SELECT clause from a
+SQL> join of the CONTACT and SYSTEM_USER tables. You should put the join in the WHERE
+SQL> clause and base the join on the LAST_UPDATED_BY and SYSTEM_USER_ID columns, which
+SQL> are the foreign and primary key respectively.:
+SQL> */
+SQL> COL contact_id	   FORMAT 999999  HEADING "Contact|ID #|--------|Table #1"
+SQL> COL system_user_id    FORMAT 999999  HEADING "System|User|ID #|--------|Table #2"
+SQL> SELECT
+  2    c.contact_lab_id contact_id,
+  3    s.system_user_lab_id system_user_id
+  4  FROM contact_lab c, system_user_lab s
+  5  WHERE s.system_user_lab_id = c.last_updated_by;
+
+           System                                                               
+ Contact     User                                                               
+    ID #     ID #                                                               
+-------- --------                                                               
+Table #1 Table #2                                                               
+-------- --------                                                               
+    1001        1                                                               
+    1002        1                                                               
+    1003        1                                                               
+    1004        1                                                               
+    1005        1                                                               
+    1006        1                                                               
+    1007        1                                                               
+    1008     1001                                                               
+    1009     1001                                                               
+    1010     1001                                                               
+    1011     1001                                                               
+    1012     1001                                                               
+
+12 rows selected.
+
+SQL> 
+SQL> /*
+SQL> 3. [8 points] Write INNER JOIN queries that use the ON subclause to perform a self-join
+SQL>   on the SYSTEM_USER table. The solution requires that you create three copies of the
+SQL>   SYSTEM_USER table by using aliases like su1, su2, and su3. Please note that joining two
+SQL>   tables is like matching two sets, while joining three table is like joining two tables
+SQL>   into a temporary result set (or pseudo table) and then joining the third table to the
+SQL>   temporary result set if it were a table.
+SQL> */
+SQL> 
+SQL> /*
+SQL>  a. [2 points]Display the SYSTEM_USER_ID and CREATED_BY columns from one row,
+SQL>  and the SYSTEM_USER_ID column from a row where it is also the primary key.
+SQL>  You should make the join with the ON subclause based on the CREATED_BY and
+SQL>  SYSTEM_USER_ID columns, which are the foreign and primary key respectively.
+SQL>  In a self-join, these columns may be in the same or different rows in the table.
+SQL> */
+SQL> COL system_user_id  FORMAT 999999	HEADING "System|User|ID #|--------|Table #1"
+SQL> COL created_by	 FORMAT 999999	HEADING "Created|By|ID #|--------|Table #1"
+SQL> COL system_user_pk  FORMAT 999999	HEADING "System|User|ID #|--------|Table #2"
+SQL> SELECT
+  2    su_t1.system_user_lab_id system_user_id,
+  3    su_t1.created_by,
+  4    su_t2.system_user_lab_id system_user_pk
+  5  FROM system_user_lab su_t1
+  6  INNER JOIN system_user_lab su_t2 ON su_t1.created_by = su_t2.system_user_lab_id;
+
+  System  Created   System                                                      
+    User       By     User                                                      
+    ID #     ID #     ID #                                                      
+-------- -------- --------                                                      
+Table #1 Table #1 Table #2                                                      
+-------- -------- --------                                                      
+       1        1        1                                                      
+    1001        1        1                                                      
+    1002        1        1                                                      
+
+3 rows selected.
+
+SQL> 
+SQL> /*
+SQL> b. [2 points]Display the SYSTEM_USER_ID and LAST_UPDATED_BY columns from one row,
+SQL> and the SYSTEM_USER_ID column from a row where it is also the primary key. You
+SQL> should make the join with the ON subclause based on the LAST_UPDATED_BY and
+SQL> SYSTEM_USER_ID columns, which are the foreign and primary key respectively.
+SQL> In a self-join, these columns may be in the same or different rows in the table.
+SQL> */
+SQL> COL system_user_id   FORMAT 999999  HEADING "System|User|ID #|--------|Table #1"
+SQL> COL last_updated_by  FORMAT 999999  HEADING "Last|Updated|By|ID #|--------|Table #1"
+SQL> COL system_user_pk   FORMAT 999999  HEADING "System|User|ID #|--------|Table #2"
+SQL> SELECT
+  2    su_t1.system_user_lab_id system_user_id,
+  3    su_t1.last_updated_by,
+  4    su_t2.system_user_lab_id system_user_pk
+  5  FROM system_user_lab su_t1
+  6  INNER JOIN system_user_lab su_t2 ON su_t1.last_updated_by = su_t2.system_user_lab_id;
+
+             Last                                                               
+  System  Updated   System                                                      
+    User       By     User                                                      
+    ID #     ID #     ID #                                                      
+-------- -------- --------                                                      
+Table #1 Table #1 Table #2                                                      
+-------- -------- --------                                                      
+       1        1        1                                                      
+    1001        1        1                                                      
+    1002        1        1                                                      
+
+3 rows selected.
+
+SQL> 
+SQL> /*
+SQL> c. [4 points] Display the SYSTEM_USER_ID and SYSTEM_USER_NAME columns from the
+SQL> first copy of the SYSTEM_USER table, then the following from the second copy of
+SQL> the SYSTEM_USER table:
+SQL> */
+SQL> COL user_id	FORMAT 999999  HEADING "System|User|ID #|--------|Table #1"
+SQL> COL user_name	FORMAT A8      HEADING "System|User|Name|--------|Table #1"
+SQL> COL cby_user_id	FORMAT 999999  HEADING "System|User|ID #|--------|Table #2"
+SQL> COL cby_user_name	FORMAT A8      HEADING "System|User|Name|--------|Table #2"
+SQL> COL lby_user_id	FORMAT 999999  HEADING "System|User|ID #|--------|Table #3"
+SQL> COL lby_user_name	FORMAT A8      HEADING "System|User|Name|--------|Table #3"
+SQL> SELECT
+  2  	su_t1.system_user_lab_id user_id,
+  3  	su_t1.system_user_lab_name user_name,
+  4  	su_t2.system_user_lab_id cby_user_id,
+  5  	su_t2.system_user_lab_name cby_user_name,
+  6  	su_t3.system_user_lab_id lby_user_id,
+  7  	su_t3.system_user_lab_name lby_user_name
+  8  FROM system_user_lab su_t1
+  9  INNER JOIN system_user_lab su_t2 ON su_t1.created_by = su_t2.system_user_lab_id
+ 10  INNER JOIN system_user_lab su_t3 ON su_t1.last_updated_by = su_t3.system_user_lab_id;
+
+  System System     System System     System System                             
+    User User         User User         User User                               
+    ID # Name         ID # Name         ID # Name                               
+-------- -------- -------- -------- -------- --------                           
+Table #1 Table #1 Table #2 Table #2 Table #3 Table #3                           
+-------- -------- -------- -------- -------- --------                           
+       1 SYSADMIN        1 SYSADMIN        1 SYSADMIN                           
+    1001 DBA1            1 SYSADMIN        1 SYSADMIN                           
+    1002 DBA2            1 SYSADMIN        1 SYSADMIN                           
+
+3 rows selected.
+
+SQL> 
+SQL> /*---------------------------------------------------------------------------------
+> 4. [8 points] Display the rental_lab_ID column from the rental_lab table, the rental_lab_ID and
+SQL>  item_lab_ID from the rental_item_lab table, and item_lab_ID column from the item_lab table. You
+SQL>  should make a join from the rental_lab table to the rental_item_lab table, and then the item_lab
+SQL>  table. Join the tables based on their respective primary and foreign key values.
+SQL>  */
+SQL> COL rental_lab_id	   FORMAT 999999  HEADING "Rental|Table|--------|Rental|ID #|--------|Table #1"
+SQL> COL rental_lab_id_fk  FORMAT 999999  HEADING "Rental Item|Table|--------|Rental|ID #|--------|Table #2"
+SQL> COL item_lab_id_fk    FORMAT 999999  HEADING "Rental Item|Table|--------|Rental|ID #|--------|Table #2"
+SQL> COL item_lab_id	   FORMAT 999999  HEADING "Item|Table|--------|Rental|ID #|--------|Table #3"
+SQL> SELECT
+  2    rental_lab_id,
+  3    rental_lab_id rental_lab_id_fk,
+  4    item_lab_id item_lab_id_fk,
+  5    item_lab_id
+  6  FROM rental_lab r
+  7  INNER JOIN rental_item_lab ri USING (rental_lab_id)
+  8  INNER JOIN item_lab i USING (item_lab_id);
+
+  Rental Rental Item Rental Item     Item                                       
+   Table       Table       Table    Table                                       
+--------    --------    -------- --------                                       
+  Rental      Rental      Rental   Rental                                       
+    ID #        ID #        ID #     ID #                                       
+--------    --------    -------- --------                                       
+Table #1    Table #2    Table #2 Table #3                                       
+-------- ----------- ----------- --------                                       
+    1001        1001        1002     1002                                       
+    1001        1001        1004     1004                                       
+    1001        1001        1005     1005                                       
+    1002        1002        1016     1016                                       
+    1002        1002        1021     1021                                       
+    1003        1003        1019     1019                                       
+    1004        1004        1014     1014                                       
+    1005        1005        1007     1007                                       
+    1005        1005        1001     1001                                       
+
+9 rows selected.
+
+SQL> 
+SQL> -- the step 5 has an error in the instruction script and I could not finish it
+SQL> 
+SQL> SPOOL OFF

@@ -1056,10 +1056,10 @@ ALTER TABLE common_lookup_lab
 MODIFY common_lookup_lab_column VARCHAR2(30) NOT NULL;
 
 CREATE UNIQUE INDEX unique_month ON common_lookup_lab ( 
- common_lookup_lab_table, 
- common_lookup_lab_column, 
- common_lookup_lab_type 
-);
+common_lookup_lab_table, 
+common_lookup_lab_column, 
+common_lookup_lab_type 
+) USING BTREE;
 
 -- ----------------------------------------------------------------------
 -- Verification on Step #4e
