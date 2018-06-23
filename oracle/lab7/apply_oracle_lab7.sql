@@ -15,3 +15,269 @@
 
 -- Run the prior lab script.
 @/home/student/Data/cit225/oracle/lab6/apply_oracle_lab6.sql
+
+SPOOL apply_oracle_lab7.log
+
+-- Step #1 - [3 points] Insert two new rows into the COMMON_LOOKUP table to 
+-- support the ACTIVE_FLAG column in the PRICE table.
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+( common_lookup_lab_s1.nextval
+, 'YES'
+, 'yes'
+, 1
+, SYSDATE
+, 1
+, SYSDATE
+, 'PRICE_LAB'
+, 'ACTIVE_FLAG'
+, 'Y'
+);
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+( common_lookup_lab_s1.nextval
+, 'NO'
+, 'no'
+, 1
+, SYSDATE
+, 1
+, SYSDATE
+, 'PRICE_LAB'
+, 'ACTIVE_FLAG'
+, 'N'
+);
+
+-- Verification #1
+COLUMN common_lookup_lab_table  FORMAT A20 HEADING "COMMON_LOOKUP_LAB_TABLE"
+COLUMN common_lookup_lab_column FORMAT A20 HEADING "COMMON_LOOKUP_LAB_COLUMN"
+COLUMN common_lookup_lab_type   FORMAT A20 HEADING "COMMON_LOOKUP_LAB_TYPE"
+SELECT   common_lookup_lab_table
+,        common_lookup_lab_column
+,        common_lookup_lab_type
+FROM     common_lookup_lab
+WHERE    common_lookup_lab_table = 'PRICE_LAB'
+AND      common_lookup_lab_column = 'ACTIVE_FLAG'
+ORDER BY 1, 2, 3 DESC;
+
+-- Step #2 - [3 points] Insert three new rows into the COMMON_LOOKUP table to support 
+-- the PRICE_TYPE column in the PRICE table, and three new rows into the 
+-- COMMON_LOOKUP table to support the RENTAL_ITEM_TYPE column in the RENTAL_ITEM table.
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+( common_lookup_lab_s1.nextval
+, '1-DAY RENTAL'
+, '1-Day Rental'
+, 1
+, SYSDATE
+, 1
+, SYSDATE
+, 'PRICE_LAB'
+, 'PRICE_LAB_TYPE'
+, '1'
+);
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+( common_lookup_lab_s1.nextval
+, '3-DAY RENTAL'
+, '3-Day Rental'
+, 1
+, SYSDATE
+, 1
+, SYSDATE
+, 'PRICE_LAB'
+, 'PRICE_LAB_TYPE'
+, '3'
+);
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+( common_lookup_lab_s1.nextval
+, '5-DAY RENTAL'
+, '5-Day Rental'
+, 1
+, SYSDATE
+, 1
+, SYSDATE
+, 'PRICE_LAB'
+, 'PRICE_LAB_TYPE'
+, '5'
+);
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+( common_lookup_lab_s1.nextval
+, '1-DAY RENTAL'
+, '1-Day Rental'
+, 1
+, SYSDATE
+, 1
+, SYSDATE
+, 'RENTAL_ITEM_LAB'
+, 'RENTAL_ITEM_LAB_TYPE'
+, '1'
+);
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+( common_lookup_lab_s1.nextval
+, '3-DAY RENTAL'
+, '3-Day Rental'
+, 1
+, SYSDATE
+, 1
+, SYSDATE
+, 'RENTAL_ITEM_LAB'
+, 'RENTAL_ITEM_LAB_TYPE'
+, '3'
+);
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+( common_lookup_lab_s1.nextval
+, '5-DAY RENTAL'
+, '5-Day Rental'
+, 1
+, SYSDATE
+, 1
+, SYSDATE
+, 'RENTAL_ITEM_LAB'
+, 'RENTAL_ITEM_LAB_TYPE'
+, '5'
+);
+
+-- Verification #2
+COLUMN common_lookup_lab_table  FORMAT A20 HEADING "COMMON_LOOKUP_TABLE"
+COLUMN common_lookup_lab_column FORMAT A20 HEADING "COMMON_LOOKUP_COLUMN"
+COLUMN common_lookup_lab_type   FORMAT A20 HEADING "COMMON_LOOKUP_TYPE"
+SELECT   common_lookup_lab_table
+,        common_lookup_lab_column
+,        common_lookup_lab_type
+FROM     common_lookup_lab
+WHERE    common_lookup_lab_table IN ('PRICE_LAB','RENTAL_ITEM_LAB')
+AND      common_lookup_lab_column IN ('PRICE_LAB_TYPE','RENTAL_ITEM_LAB_TYPE')
+ORDER BY 1, 3;
+
+-- Step #3 - [4 points] You added a RENTAL_ITEM_PRICE and RENTAL_ITEM_TYPE columns 
+-- in the previous (Lab #6). Here you update the RENTAL_ITEM_TYPE column 
+-- with values for all pre-existing rows. After you have updated the pre-
+-- existing rows, you add a NOT NULL constraint on the RENTAL_ITEM_TYPE 
+-- column.
+
+-- #3a - Update the RENTAL_ITEM_TYPE column with values for all pre-existing rows, 
+-- so you can add a FOREIGN KEY and NOT NULL constraint on the RENTAL_ITEM_TYPE 
+-- column in steps b and c respectively.
+
+UPDATE   rental_item_lab ri
+SET      rental_item_lab_type =
+           (SELECT   cl.common_lookup_lab_id
+            FROM     common_lookup_lab cl
+            WHERE    cl.common_lookup_lab_code =
+              (SELECT   r.return_date - r.check_out_date
+               FROM     rental_lab r
+               WHERE    r.rental_lab_id = ri.rental_lab_id)
+            AND      cl.common_lookup_lab_table = 'RENTAL_ITEM_LAB'
+            AND      cl.common_lookup_lab_column = 'RENTAL_ITEM_LAB_TYPE');
+
+-- Verification #3a
+SELECT   ROW_COUNT
+,        col_count
+FROM    (SELECT   COUNT(*) AS ROW_COUNT
+         FROM     rental_item_lab) rc CROSS JOIN
+        (SELECT   COUNT(rental_item_lab_type) AS col_count
+         FROM     rental_item_lab
+         WHERE    rental_item_lab_type IS NOT NULL) cc;
+
+-- #3b - Add the FK_RENTAL_ITEM_7 foreign key to the RENTAL_ITEM table. The 
+-- FK_RENTAL_ITEM_7 foreign key belongs on the RENTAL_ITEM_TYPE column of the 
+-- RENTAL_ITEM table and references the COMMON_LOOKUP_ID column of the COMMON_LOOKUP 
+-- table.
+
+alter table rental_item_lab
+add constraint fk_rental_item_lab_7
+        foreign key (rental_item_lab_type)
+        references common_lookup_lab (common_lookup_lab_id);
+
+-- Verification #3b
+COLUMN table_name      FORMAT A20 HEADING "TABLE NAME"
+COLUMN constraint_name FORMAT A20 HEADING "CONSTRAINT NAME"
+COLUMN constraint_type FORMAT A15 HEADING "CONSTRAINT|TYPE"
+COLUMN column_name     FORMAT A20 HEADING "COLUMN NAME"
+SELECT   uc.table_name
+,        uc.constraint_name
+,        CASE
+           WHEN uc.constraint_type = 'R' THEN
+            'FOREIGN KEY'
+         END AS constraint_type
+,        ucc.column_name
+FROM     user_constraints uc INNER JOIN user_cons_columns ucc
+ON       uc.constraint_name = ucc.constraint_name
+WHERE    uc.table_name = 'RENTAL_ITEM_LAB'
+AND      ucc.column_name = 'RENTAL_ITEM_LAB_TYPE';
+
+-- #3c - Change the RENTAL_ITEM_TYPE column of the RENTAL_ITEM table 
+-- from a null allowed column to a not null constrained column.
+
+alter table rental_item_lab
+modify (rental_item_lab_type number not null);
+
+-- Verification #3c
+COLUMN CONSTRAINT FORMAT A10
+SELECT   TABLE_NAME
+,        column_name
+,        CASE
+           WHEN NULLABLE = 'N' THEN 'NOT NULL'
+           ELSE 'NULLABLE'
+         END AS CONSTRAINT
+FROM     user_tab_columns
+WHERE    TABLE_NAME = 'RENTAL_ITEM_LAB'
+AND      column_name = 'RENTAL_ITEM_LAB_TYPE';
+
+-- Step #4 - You need to write a SELECT statement that returns a data set 
+-- that you can subsequently insert into the PRICE table. This is a complex 
+-- problem because you must fabricate rows from a base set of rows, and then
+-- you must perform mathematical calculations with the CASE statement.
+
+COLUMN item_lab_id     FORMAT 9999 HEADING "ITEM|ID"
+COLUMN active_flag FORMAT A6   HEADING "ACTIVE|FLAG"
+COLUMN price_type  FORMAT 9999 HEADING "PRICE|TYPE"
+COLUMN price_desc  FORMAT A12  HEADING "PRICE DESC"
+--COLUMN start_date  FORMAT A10  HEADING "START|DATE"
+--COLUMN end_date    FORMAT A10  HEADING "END|DATE"
+COLUMN amount      FORMAT 9999 HEADING "AMOUNT"
+
+SELECT   i.item_lab_id
+,        af.active_flag
+,        cl.common_lookup_lab_id as price_type
+,        cl.common_lookup_lab_type as price_desc
+,        case 
+                when af.active_flag in ('Y', 'N') 
+                then case 
+                        when (TRUNC(SYSDATE) - 30) < i.release_date
+                        then case
+                                when dr.rental_days = 1 then 3
+                                when dr.rental_days = 3 then 10
+                                when dr.rental_days = 5 then 15
+                        end
+                        when (TRUNC(SYSDATE) - 30) >= i.release_date
+                        then case
+                                when dr.rental_days = 1 then 1
+                                when dr.rental_days = 3 then 3
+                                when dr.rental_days = 5 then 5
+                        end
+                end
+         end as amount
+FROM     item_lab i CROSS JOIN
+        (SELECT 'Y' AS active_flag FROM dual
+         UNION ALL
+         SELECT 'N' AS active_flag FROM dual) af CROSS JOIN
+        (SELECT '1' AS rental_days FROM dual
+         UNION ALL
+         SELECT '3' AS rental_days FROM dual 
+         UNION ALL
+         SELECT '5' AS rental_days FROM dual) dr INNER JOIN
+         common_lookup_lab cl ON dr.rental_days = SUBSTR(cl.common_lookup_lab_type,1,1)
+WHERE    cl.common_lookup_lab_table = 'PRICE_LAB'
+AND      cl.common_lookup_lab_column = 'PRICE_LAB_TYPE'
+AND not ((af.active_flag = 'Y' and (TRUNC(SYSDATE) - 30) >= i.release_date)
+        OR (af.active_flag = 'N' and (TRUNC(SYSDATE) - 30) < i.release_date))
+ORDER BY 1, 2, 3;
+
+SPOOL off
+
+COMMIT;
