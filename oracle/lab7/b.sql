@@ -1,0 +1,49 @@
+-- Step #4 - You need to write a SELECT statement that returns a data set 
+-- that you can subsequently insert into the PRICE table. This is a complex 
+-- problem because you must fabricate rows from a base set of rows, and then
+-- you must perform mathematical calculations with the CASE statement.
+
+COLUMN item_lab_id     FORMAT 9999 HEADING "ITEM|ID"
+COLUMN active_flag FORMAT A6   HEADING "ACTIVE|FLAG"
+COLUMN price_type  FORMAT 9999 HEADING "PRICE|TYPE"
+COLUMN price_desc  FORMAT A12  HEADING "PRICE DESC"
+--COLUMN start_date  FORMAT A10  HEADING "START|DATE"
+--COLUMN end_date    FORMAT A10  HEADING "END|DATE"
+COLUMN amount      FORMAT 9999 HEADING "AMOUNT"
+
+SELECT   i.item_lab_id
+,        af.active_flag
+,        cl.common_lookup_lab_id as price_type
+,        cl.common_lookup_lab_type as price_desc
+,        case 
+                when af.active_flag in ('Y', 'N') 
+                then case 
+                        when (TRUNC(SYSDATE) - 30) < i.release_date
+                        then case
+                                when dr.rental_days = 1 then 3
+                                when dr.rental_days = 3 then 10
+                                when dr.rental_days = 5 then 15
+                        end
+                        when (TRUNC(SYSDATE) - 30) >= i.release_date
+                        then case
+                                when dr.rental_days = 1 then 1
+                                when dr.rental_days = 3 then 3
+                                when dr.rental_days = 5 then 5
+                        end
+                end
+         end as amount
+FROM     item_lab i CROSS JOIN
+        (SELECT 'Y' AS active_flag FROM dual
+         UNION ALL
+         SELECT 'N' AS active_flag FROM dual) af CROSS JOIN
+        (SELECT '1' AS rental_days FROM dual
+         UNION ALL
+         SELECT '3' AS rental_days FROM dual 
+         UNION ALL
+         SELECT '5' AS rental_days FROM dual) dr INNER JOIN
+         common_lookup_lab cl ON dr.rental_days = SUBSTR(cl.common_lookup_lab_type,1,1)
+WHERE    cl.common_lookup_lab_table = 'PRICE_LAB'
+AND      cl.common_lookup_lab_column = 'PRICE_LAB_TYPE'
+AND not ((af.active_flag = 'Y' and (TRUNC(SYSDATE) - 30) >= i.release_date)
+        OR (af.active_flag = 'N' and (TRUNC(SYSDATE) - 30) < i.release_date))
+ORDER BY 1, 2, 3;
