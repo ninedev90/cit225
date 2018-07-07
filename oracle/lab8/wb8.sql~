@@ -1,0 +1,133 @@
+/*UPDATE   rental_item_lab ri
+SET      rental_item_lab_price =
+          (SELECT   p.amount
+           FROM     price_lab p INNER JOIN common_lookup_lab cl1
+           ON       p.price_type = cl1.common_lookup_lab_id 
+                    CROSS JOIN rental_lab r
+                    CROSS JOIN common_lookup_lab cl2 
+           WHERE    p.item_lab_id = ri.item_lab_id
+           AND      ri.rental_lab_id = r.rental_lab_id
+           AND      ri.rental_item_lab_type = cl2.common_lookup_lab_id
+           AND      cl1.common_lookup_lab_code = cl2.common_lookup_lab_code
+           AND      r.check_out_date
+                      BETWEEN p.start_date AND p.end_date);
+*
+-- Widen the display console.
+SET LINESIZE 150
+ 
+-- Set the column display values.
+COL customer_name          FORMAT A30  HEADING "contact|--------|Customer Name"
+COL contact_id             FORMAT 9999 HEADING "contact|--------|contact_lab|ID #"
+COL customer_id            FORMAT 9999 HEADING "rental|--------|Customer|ID #"
+COL r_rental_id            FORMAT 9999 HEADING "rental|------|rental_lab|ID #"
+COL ri_rental_id           FORMAT 9999 HEADING "rental|item|------|rental_lab|ID #"
+COL rental_item_id         FORMAT 9999 HEADING "rental|item|------||ID #"
+COL price_item_id          FORMAT 9999 HEADING "Price|------|item_lab|ID #"
+COL rental_item_id    FORMAT 9999 HEADING "rental|item|------|item_lab|ID #"
+COL rental_item_price      FORMAT 9999 HEADING "rental|item|------||Price"
+COL amount                 FORMAT 9999 HEADING "Price|------||Amount"
+COL price_type_code        FORMAT 9999 HEADING "Price|------|Type|Code"
+COL rental_item_type_code  FORMAT 9999 HEADING "rental|item|------|Type|Code"
+SELECT   
+c.last_name||', '||c.first_name
+||       CASE
+           WHEN c.middle_name IS NOT NULL THEN ' '||c.middle_name
+         END AS customer_name
+,        c.contact_lab_id As contact_id
+,        r.customer_id
+,        r.rental_lab_id AS r_rental_id
+,        ri.rental_lab_id AS ri_rental_id
+,        ri.rental_item_lab_id AS rental_item_id
+,        p.item_lab_id AS price_item_id
+,        ri.item_lab_id AS rental_item_id
+,        ri.rental_item_lab_price as rental_item_price
+,        p.amount
+,        TO_NUMBER(cl2.common_lookup_lab_code) AS price_type_code
+,        TO_NUMBER(cl2.common_lookup_lab_code) AS rental_item_lab_type_code
+FROM     price_lab p INNER JOIN common_lookup_lab cl1
+ON       p.price_type = cl1.common_lookup_lab_id
+AND      cl1.common_lookup_lab_table = 'PRICE_LAB'
+AND      cl1.common_lookup_lab_column = 'PRICE_LAB_TYPE' 
+FULL JOIN rental_item_lab ri            ON       p.item_lab_id = ri.item_lab_id 
+INNER JOIN common_lookup_lab cl2        ON       ri.rental_item_lab_type = cl2.common_lookup_lab_id
+AND      cl2.common_lookup_lab_table = 'RENTAL_ITEM_LAB'
+AND      cl2.common_lookup_lab_column = 'RENTAL_ITEM_LAB_TYPE' 
+RIGHT JOIN rental_lab r                 ON       ri.rental_lab_id = r.rental_lab_id 
+FULL JOIN contact_lab c                 ON       r.customer_id = c.contact_lab_id
+WHERE    cl1.common_lookup_lab_code = cl2.common_lookup_lab_code
+--AND      r.check_out_date BETWEEN  p.start_date AND p.end_date
+ORDER BY 2, 3;
+ 
+-- Reset the column display values to their default value.
+SET LINESIZE 80
+
+
+COL common_lookup_table  FORMAT A20 HEADING "Common|Lookup Table"
+COL common_lookup_column FORMAT A30 HEADING "Common|Lookup Column"
+COL common_lookup_code   FORMAT 999 HEADING "Common|Lookup|Code"
+COL total_pk_count       FORMAT 999 HEADING "Foreign|Key|Count"
+SELECT   cl.common_lookup_lab_table AS common_lookup_table
+,        cl.common_lookup_lab_column AS common_lookup_column
+,        TO_NUMBER(cl.common_lookup_lab_code) AS common_lookup_code
+,        COUNT(*) AS total_pk_count
+FROM     price_lab p INNER JOIN common_lookup_lab cl
+ON       p.price_type = cl.common_lookup_lab_id
+AND      cl.common_lookup_lab_table = 'PRICE_LAB'
+AND      cl.common_lookup_lab_column = 'PRICE_TYPE'
+GROUP BY cl.common_lookup_lab_table
+,        cl.common_lookup_lab_column
+,        cl.common_lookup_lab_code
+UNION ALL
+SELECT   cl.common_lookup_lab_table as common_lookup_table
+,        cl.common_lookup_lab_column AS common_lookup_column
+,        TO_NUMBER(cl.common_lookup_lab_code) AS common_lookup_lab_code
+,        COUNT(*) AS total_pk_count
+FROM     rental_item_lab ri INNER JOIN common_lookup_lab cl
+ON       ri.rental_item_lab_type = cl.common_lookup_lab_id
+AND      cl.common_lookup_lab_table = 'RENTAL_ITEM_LAB'
+AND      cl.common_lookup_lab_column = 'RENTAL_ITEM_LAB_TYPE'
+GROUP BY cl.common_lookup_lab_table
+,        cl.common_lookup_lab_column
+,        cl.common_lookup_lab_code
+ORDER BY 1, 2, 3;
+*/
+-- Widen the display console.
+SET LINESIZE 150
+
+COL customer_name          FORMAT A30  HEADING "Contact|--------|Customer Name"
+COL r_rental_id            FORMAT 9999 HEADING "Rental|------|Rental|ID #"
+COL amount                 FORMAT 9999 HEADING "Price|------||Amount"
+COL price_type_code        FORMAT 9999 HEADING "Price|------|Type|Code"
+COL rental_item_type_code  FORMAT 9999 HEADING "Rental|Item|------|Type|Code"
+COL needle                 FORMAT A11  HEADING "Rental|--------|Check Out|Date"
+COL low_haystack           FORMAT A11  HEADING "Price|--------|Start|Date"
+COL high_haystack          FORMAT A11  HEADING "Price|--------|End|Date"
+SELECT   c.last_name||', '||c.first_name
+||       CASE
+           WHEN c.middle_name IS NOT NULL THEN ' '||c.middle_name
+         END AS customer_name
+,        ri.rental_lab_id AS ri_rental_id
+,        p.amount
+,        TO_NUMBER(cl2.common_lookup_lab_code) AS price_type_code
+,        TO_NUMBER(cl2.common_lookup_lab_code) AS rental_item_type_code
+,        p.start_date AS low_haystack
+,        r.check_out_date AS needle
+,        NVL(p.end_date,TRUNC(SYSDATE) + 1) AS high_haystack
+FROM     price_lab p INNER JOIN common_lookup_lab cl1
+ON       p.price_type = cl1.common_lookup_lab_id
+AND      cl1.common_lookup_lab_table = 'PRICE_LAB'
+AND      cl1.common_lookup_lab_column = 'PRICE_TYPE' FULL JOIN rental_item_lab ri 
+ON       p.item_lab_id = ri.item_lab_id INNER JOIN common_lookup_lab cl2
+ON       ri.rental_item_lab_type = cl2.common_lookup_lab_id
+AND      cl2.common_lookup_lab_table = 'RENTAL_ITEM_LAB'
+AND      cl2.common_lookup_lab_column = 'RENTAL_ITEM_LAB_TYPE' RIGHT JOIN rental_lab r
+ON       ri.rental_lab_id = r.rental_lab_id FULL JOIN contact_lab c
+ON       r.customer_id = c.contact_lab_id
+WHERE    cl1.common_lookup_lab_code = cl2.common_lookup_lab_code
+AND      p.active_flag = 'Y'  
+AND NOT  r.check_out_date
+           BETWEEN  p.start_date AND NVL(p.end_date,TRUNC(SYSDATE) + 1)
+ORDER BY 2, 3;
+
+-- Widen the display console.
+SET LINESIZE 80

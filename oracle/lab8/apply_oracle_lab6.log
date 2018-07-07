@@ -101,12 +101,13 @@ SQL> CREATE TABLE price_lab
   5    , active_flag		     VARCHAR2(1)   CONSTRAINT yn_price CHECK(active_flag in ('Y', 'N'))
   6    , start_date		     DATE	   CONSTRAINT nn_price_lab_3 NOT NULL
   7    , end_date		     DATE
-  8    , created_by		     NUMBER	   CONSTRAINT nn_price_lab_4 NOT NULL
-  9    , creation_date		     DATE	   CONSTRAINT nn_price_lab_5 NOT NULL
- 10    , last_updated_by	     NUMBER	   CONSTRAINT nn_price_lab_6 NOT NULL
- 11    , last_update_date	     DATE	   CONSTRAINT nn_price_lab_7 NOT NULL
- 12    , CONSTRAINT pk_price_lab_1	PRIMARY KEY(price_lab_id)
- 13    , CONSTRAINT fk_price_lab_2	FOREIGN KEY(last_updated_by) REFERENCES item_lab(item_lab_id));
+  8    , amount 		     NUMBER	   CONSTRAINT nn_price_lab_8 NOT NULL
+  9    , created_by		     NUMBER	   CONSTRAINT nn_price_lab_4 NOT NULL
+ 10    , creation_date		     DATE	   CONSTRAINT nn_price_lab_5 NOT NULL
+ 11    , last_updated_by	     NUMBER	   CONSTRAINT nn_price_lab_6 NOT NULL
+ 12    , last_update_date	     DATE	   CONSTRAINT nn_price_lab_7 NOT NULL
+ 13    , CONSTRAINT pk_price_lab_1	PRIMARY KEY(price_lab_id)
+ 14    , CONSTRAINT fk_price_lab_2	FOREIGN KEY(item_lab_id)     REFERENCES item_lab(item_lab_id));
 
 Table created.
 
@@ -151,12 +152,13 @@ PRICE_LAB              3 PRICE_TYPE                      NUMBER(22)
 PRICE_LAB              4 ACTIVE_FLAG                     VARCHAR2(1)            
 PRICE_LAB              5 START_DATE             NOT NULL DATE                   
 PRICE_LAB              6 END_DATE                        DATE                   
-PRICE_LAB              7 CREATED_BY             NOT NULL NUMBER(22)             
-PRICE_LAB              8 CREATION_DATE          NOT NULL DATE                   
-PRICE_LAB              9 LAST_UPDATED_BY        NOT NULL NUMBER(22)             
-PRICE_LAB             10 LAST_UPDATE_DATE       NOT NULL DATE                   
+PRICE_LAB              7 AMOUNT                 NOT NULL NUMBER(22)             
+PRICE_LAB              8 CREATED_BY             NOT NULL NUMBER(22)             
+PRICE_LAB              9 CREATION_DATE          NOT NULL DATE                   
+PRICE_LAB             10 LAST_UPDATED_BY        NOT NULL NUMBER(22)             
+PRICE_LAB             11 LAST_UPDATE_DATE       NOT NULL DATE                   
 
-10 rows selected.
+11 rows selected.
 
 SQL> 
 SQL> -- ----------------------------------------------------------------------
@@ -169,12 +171,16 @@ SQL> SELECT   uc.constraint_name
   3  FROM     user_constraints uc INNER JOIN user_cons_columns ucc
   4  ON       uc.table_name = ucc.table_name
   5  AND      uc.constraint_name = ucc.constraint_name
-  6  WHERE    uc.table_name = UPPER('price')
+  6  WHERE    uc.table_name = UPPER('price_lab')
   7  AND      ucc.column_name = UPPER('active_flag')
   8  AND      uc.constraint_name = UPPER('yn_price')
   9  AND      uc.constraint_type = 'C';
 
-no rows selected
+Constraint Name  Search Condition                                               
+---------------- ------------------------------                                 
+YN_PRICE         active_flag in ('Y', 'N')                                      
+
+1 row selected.
 
 SQL> 
 SQL> -- ----------------------------------------------------------------------
@@ -256,7 +262,7 @@ SQL> INSERT INTO item_lab
  20  ,'Goku and the prisoner of azkaban'
  21  ,'A Otako movie'
  22  ,'Everyone'
- 23  ,TRUNC(SYSDATE + 10)
+ 23  ,(TRUNC(SYSDATE ) - 1)
  24  , 1001
  25  , SYSDATE
  26  , 1001
@@ -288,7 +294,7 @@ SQL> INSERT INTO item_lab
  20  ,'Infinity War'
  21  ,'The Last Avanger'
  22  ,'PG'
- 23  ,TRUNC(SYSDATE + 10)
+ 23  ,(TRUNC(SYSDATE ) - 1)
  24  , 1001
  25  , SYSDATE
  26  , 1001
@@ -320,7 +326,7 @@ SQL> INSERT INTO item_lab
  20  ,'Upgrade'
  21  ,'No Man, No Machine, More.'
  22  ,'Everyone'
- 23  ,TRUNC(SYSDATE + 10)
+ 23  ,(TRUNC(SYSDATE ) - 1)
  24  , 1001
  25  , SYSDATE
  26  , 1001
@@ -340,11 +346,11 @@ SQL> SELECT   i.item_lab_title
 
 Item Title                 TODAY              RELEASE_DATE                      
 -------------------------- ------------------ ------------------                
-Goku and the prisoner of a 02-JUL-18          12-JUL-18                         
+Goku and the prisoner of a 06-JUL-18          05-JUL-18                         
 zkaban                                                                          
                                                                                 
-Infinity War               02-JUL-18          12-JUL-18                         
-Upgrade                    02-JUL-18          12-JUL-18                         
+Infinity War               06-JUL-18          05-JUL-18                         
+Upgrade                    06-JUL-18          05-JUL-18                         
 
 3 rows selected.
 
@@ -1508,10 +1514,10 @@ NN_CLOOKUP_LAB_4       "CREATED_BY" IS NOT NULL             C
 NN_CLOOKUP_LAB_5       "CREATION_DATE" IS NOT NULL          C                   
 NN_CLOOKUP_LAB_6       "LAST_UPDATED_BY" IS NOT NULL        C                   
 NN_CLOOKUP_LAB_7       "LAST_UPDATE_DATE" IS NOT NULL       C                   
-SYS_C0034813           "COMMON_LOOKUP_LAB_TABLE" IS NOT NUL C                   
+SYS_C0041784           "COMMON_LOOKUP_LAB_TABLE" IS NOT NUL C                   
                        L                                                        
                                                                                 
-SYS_C0034814           "COMMON_LOOKUP_LAB_COLUMN" IS NOT NU C                   
+SYS_C0041785           "COMMON_LOOKUP_LAB_COLUMN" IS NOT NU C                   
                        LL                                                       
                                                                                 
 

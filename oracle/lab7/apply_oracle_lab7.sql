@@ -72,7 +72,7 @@ INSERT INTO COMMON_LOOKUP_LAB VALUES
 , 1
 , SYSDATE
 , 'PRICE_LAB'
-, 'PRICE_LAB_TYPE'
+, 'PRICE_TYPE'
 , '1'
 );
 
@@ -85,7 +85,7 @@ INSERT INTO COMMON_LOOKUP_LAB VALUES
 , 1
 , SYSDATE
 , 'PRICE_LAB'
-, 'PRICE_LAB_TYPE'
+, 'PRICE_TYPE'
 , '3'
 );
 
@@ -98,7 +98,7 @@ INSERT INTO COMMON_LOOKUP_LAB VALUES
 , 1
 , SYSDATE
 , 'PRICE_LAB'
-, 'PRICE_LAB_TYPE'
+, 'PRICE_TYPE'
 , '5'
 );
 
@@ -150,7 +150,7 @@ SELECT   common_lookup_lab_table
 ,        common_lookup_lab_type
 FROM     common_lookup_lab
 WHERE    common_lookup_lab_table IN ('PRICE_LAB','RENTAL_ITEM_LAB')
-AND      common_lookup_lab_column IN ('PRICE_LAB_TYPE','RENTAL_ITEM_LAB_TYPE')
+AND      common_lookup_lab_column IN ('PRICE_TYPE','RENTAL_ITEM_LAB_TYPE')
 ORDER BY 1, 3;
 
 -- Step #3 - [4 points] You added a RENTAL_ITEM_PRICE and RENTAL_ITEM_TYPE columns 
@@ -237,29 +237,34 @@ COLUMN item_lab_id     FORMAT 9999 HEADING "ITEM|ID"
 COLUMN active_flag FORMAT A6   HEADING "ACTIVE|FLAG"
 COLUMN price_type  FORMAT 9999 HEADING "PRICE|TYPE"
 COLUMN price_desc  FORMAT A12  HEADING "PRICE DESC"
---COLUMN start_date  FORMAT A10  HEADING "START|DATE"
---COLUMN end_date    FORMAT A10  HEADING "END|DATE"
+COLUMN start_date  FORMAT A10  HEADING "START|DATE"
+COLUMN end_date    FORMAT A10  HEADING "END|DATE"
 COLUMN amount      FORMAT 9999 HEADING "AMOUNT"
-
 SELECT   i.item_lab_id
 ,        af.active_flag
 ,        cl.common_lookup_lab_id as price_type
 ,        cl.common_lookup_lab_type as price_desc
+,       case 
+                when af.active_flag = 'Y' AND (TRUNC(SYSDATE) - 30) >= i.release_date
+                then i.release_date + 31 
+                else i.release_date 
+         end as start_date
+,       case 
+                when af.active_flag = 'N'
+                then i.release_date + 30 
+                else null 
+         end as end_date
 ,        case 
-                when af.active_flag in ('Y', 'N') 
-                then case 
-                        when (TRUNC(SYSDATE) - 30) < i.release_date
-                        then case
-                                when dr.rental_days = 1 then 3
-                                when dr.rental_days = 3 then 10
-                                when dr.rental_days = 5 then 15
-                        end
-                        when (TRUNC(SYSDATE) - 30) >= i.release_date
-                        then case
-                                when dr.rental_days = 1 then 1
-                                when dr.rental_days = 3 then 3
-                                when dr.rental_days = 5 then 5
-                        end
+                when af.active_flag = 'N' or (TRUNC(SYSDATE) - 30) < i.release_date
+                then case
+                        when dr.rental_days = 1 then 3
+                        when dr.rental_days = 3 then 10
+                        when dr.rental_days = 5 then 15
+                end
+                else case
+                        when dr.rental_days = 1 then 1
+                        when dr.rental_days = 3 then 3
+                        when dr.rental_days = 5 then 5
                 end
          end as amount
 FROM     item_lab i CROSS JOIN
@@ -273,9 +278,8 @@ FROM     item_lab i CROSS JOIN
          SELECT '5' AS rental_days FROM dual) dr INNER JOIN
          common_lookup_lab cl ON dr.rental_days = SUBSTR(cl.common_lookup_lab_type,1,1)
 WHERE    cl.common_lookup_lab_table = 'PRICE_LAB'
-AND      cl.common_lookup_lab_column = 'PRICE_LAB_TYPE'
-AND not ((af.active_flag = 'Y' and (TRUNC(SYSDATE) - 30) >= i.release_date)
-        OR (af.active_flag = 'N' and (TRUNC(SYSDATE) - 30) < i.release_date))
+AND      cl.common_lookup_lab_column = 'PRICE_TYPE'
+AND not  (af.active_flag = 'N' and (TRUNC(SYSDATE) - 30) < i.release_date)
 ORDER BY 1, 2, 3;
 
 SPOOL off

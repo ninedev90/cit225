@@ -83,12 +83,13 @@ CREATE TABLE price_lab
   , active_flag                 VARCHAR2(1)   CONSTRAINT yn_price CHECK(active_flag in ('Y', 'N'))
   , start_date                  DATE          CONSTRAINT nn_price_lab_3 NOT NULL
   , end_date                    DATE
+  , amount                      NUMBER        CONSTRAINT nn_price_lab_8 NOT NULL  
   , created_by                  NUMBER        CONSTRAINT nn_price_lab_4 NOT NULL
   , creation_date               DATE          CONSTRAINT nn_price_lab_5 NOT NULL
   , last_updated_by             NUMBER        CONSTRAINT nn_price_lab_6 NOT NULL
   , last_update_date            DATE          CONSTRAINT nn_price_lab_7 NOT NULL
   , CONSTRAINT pk_price_lab_1      PRIMARY KEY(price_lab_id)
-  , CONSTRAINT fk_price_lab_2      FOREIGN KEY(last_updated_by) REFERENCES item_lab(item_lab_id));
+  , CONSTRAINT fk_price_lab_2      FOREIGN KEY(item_lab_id)     REFERENCES item_lab(item_lab_id));
   , CONSTRAINT fk_price_lab_3      FOREIGN KEY(price_type)      REFERENCES common_lookup_lab(common_lookup_lab_id)
   , CONSTRAINT fk_price_lab_4      FOREIGN KEY(created_by)      REFERENCES system_user_lab(system_user_lab_id)
   , CONSTRAINT fk_price_lab_5      FOREIGN KEY(last_updated_by) REFERENCES system_user_lab(system_user_lab_id));
@@ -128,7 +129,7 @@ SELECT   uc.constraint_name
 FROM     user_constraints uc INNER JOIN user_cons_columns ucc
 ON       uc.table_name = ucc.table_name
 AND      uc.constraint_name = ucc.constraint_name
-WHERE    uc.table_name = UPPER('price')
+WHERE    uc.table_name = UPPER('price_lab')
 AND      ucc.column_name = UPPER('active_flag')
 AND      uc.constraint_name = UPPER('yn_price')
 AND      uc.constraint_type = 'C';
@@ -191,7 +192,7 @@ VALUES
 ,'Goku and the prisoner of azkaban'
 ,'A Otako movie'
 ,'Everyone'
-,TRUNC(SYSDATE + 10)
+,(TRUNC(SYSDATE ) - 1)
 , 1001
 , SYSDATE
 , 1001
@@ -220,7 +221,7 @@ VALUES
 ,'Infinity War'
 ,'The Last Avanger'
 ,'PG'
-,TRUNC(SYSDATE + 10)
+,(TRUNC(SYSDATE ) - 1)
 , 1001
 , SYSDATE
 , 1001
@@ -249,7 +250,7 @@ VALUES
 ,'Upgrade'
 ,'No Man, No Machine, More.'
 ,'Everyone'
-,TRUNC(SYSDATE + 10)
+,(TRUNC(SYSDATE ) - 1)
 , 1001
 , SYSDATE
 , 1001

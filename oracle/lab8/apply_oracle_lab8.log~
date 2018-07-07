@@ -1,0 +1,131 @@
+SQL> -- Step#1 [10 points] Using the query you developed in Step #4 of Lab #7, add the necessary columns to insert the values directly into the PRICE table. You need to create a PRICE_S sequence and call the sequence as a value in the SELECT-list. (HINT: You call the PRICE_S sequence like this PRICE_S.NEXTVAL inside the SELECT-list.)
+SQL> -- Create sequence.
+SQL> CREATE SEQUENCE price_lab_s START WITH 1 NOCACHE;
+CREATE SEQUENCE price_lab_s START WITH 1 NOCACHE
+                *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> 
+SQL> INSERT INTO price_lab
+  2  ( price_lab_id
+  3  , item_lab_id
+  4  , price_type
+  5  , active_flag
+  6  , start_date
+  7  , end_date
+  8  , created_by
+  9  , creation_date
+ 10  , last_updated_by
+ 11  , last_update_date)
+ 12  SELECT
+ 13  	     price_lab_s.nextval
+ 14  ,	     t.item_lab_id
+ 15  ,	     t.price_type
+ 16  ,	     t.active_flag
+ 17  ,	     t.start_date
+ 18  ,	     t.end_date
+ 19  ,	     1
+ 20  ,	     SYSDATE
+ 21  ,	     1
+ 22  ,	     SYSDATE
+ 23  FROM (
+ 24  	     SELECT  i.item_lab_id
+ 25  	     ,	     cl.common_lookup_lab_id as price_type
+ 26  	     ,	     af.active_flag
+ 27  	     ,	     i.release_date as start_date
+ 28  	     ,	     case
+ 29  			     when (TRUNC(SYSDATE) - 30) >= i.release_date
+ 30  			     then i.release_date + 30
+ 31  			     else null
+ 32  		      end as end_date
+ 33  	     ,	      case
+ 34  			     when af.active_flag in ('Y', 'N')
+ 35  			     then case
+ 36  				     when (TRUNC(SYSDATE) - 30) < i.release_date
+ 37  				     then case
+ 38  					     when dr.rental_days = 1 then 3
+ 39  					     when dr.rental_days = 3 then 10
+ 40  					     when dr.rental_days = 5 then 15
+ 41  				     end
+ 42  				     when (TRUNC(SYSDATE) - 30) >= i.release_date
+ 43  				     then case
+ 44  					     when dr.rental_days = 1 then 1
+ 45  					     when dr.rental_days = 3 then 3
+ 46  					     when dr.rental_days = 5 then 5
+ 47  				     end
+ 48  			     end
+ 49  		      end as amount
+ 50  	     FROM     item_lab i CROSS JOIN
+ 51  		     (SELECT 'Y' AS active_flag FROM dual
+ 52  		      UNION ALL
+ 53  		      SELECT 'N' AS active_flag FROM dual) af CROSS JOIN
+ 54  		     (SELECT '1' AS rental_days FROM dual
+ 55  		      UNION ALL
+ 56  		      SELECT '3' AS rental_days FROM dual
+ 57  		      UNION ALL
+ 58  		      SELECT '5' AS rental_days FROM dual) dr INNER JOIN
+ 59  		      common_lookup_lab cl ON dr.rental_days = SUBSTR(cl.common_lookup_lab_type,1,1)
+ 60  	     WHERE    cl.common_lookup_lab_table = 'PRICE_LAB'
+ 61  	     AND      cl.common_lookup_lab_column = 'PRICE_LAB_TYPE'
+ 62  	     AND not ((af.active_flag = 'Y' and (TRUNC(SYSDATE) - 30) >= i.release_date)
+ 63  		     OR (af.active_flag = 'N' and (TRUNC(SYSDATE) - 30) < i.release_date))
+ 64  	     ORDER BY 1, 2, 3
+ 65  ) t;
+INSERT INTO price_lab
+*
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("STUDENT"."PRICE_LAB"."AMOUNT") 
+
+
+SQL> 
+SQL> -- Verification Step#1
+SQL> SELECT  'OLD Y' AS "Type"
+  2  ,	      COUNT(CASE WHEN amount = 1 THEN 1 END) AS "1-Day"
+  3  ,	      COUNT(CASE WHEN amount = 3 THEN 1 END) AS "3-Day"
+  4  ,	      COUNT(CASE WHEN amount = 5 THEN 1 END) AS "5-Day"
+  5  ,	      COUNT(*) AS "TOTAL"
+  6  FROM     price p , item i
+  7  WHERE    active_flag = 'Y' AND i.item_id = p.item_id
+  8  AND     (TRUNC(SYSDATE) - TRUNC(i.release_date)) > 30
+  9  AND      end_date IS NULL
+ 10  UNION ALL
+ 11  SELECT  'OLD N' AS "Type"
+ 12  ,	      COUNT(CASE WHEN amount =	3 THEN 1 END) AS "1-Day"
+ 13  ,	      COUNT(CASE WHEN amount = 10 THEN 1 END) AS "3-Day"
+ 14  ,	      COUNT(CASE WHEN amount = 15 THEN 1 END) AS "5-Day"
+ 15  ,	      COUNT(*) AS "TOTAL"
+ 16  FROM     price p , item i
+ 17  WHERE    active_flag = 'N' AND i.item_id = p.item_id
+ 18  AND     (TRUNC(SYSDATE) - TRUNC(i.release_date)) > 30
+ 19  AND NOT end_date IS NULL
+ 20  UNION ALL
+ 21  SELECT  'NEW Y' AS "Type"
+ 22  ,	      COUNT(CASE WHEN amount =	3 THEN 1 END) AS "1-Day"
+ 23  ,	      COUNT(CASE WHEN amount = 10 THEN 1 END) AS "3-Day"
+ 24  ,	      COUNT(CASE WHEN amount = 15 THEN 1 END) AS "5-Day"
+ 25  ,	      COUNT(*) AS "TOTAL"
+ 26  FROM     price p , item i
+ 27  WHERE    active_flag = 'Y' AND i.item_id = p.item_id
+ 28  AND     (TRUNC(SYSDATE) - TRUNC(i.release_date)) < 31
+ 29  AND      end_date IS NULL
+ 30  UNION ALL
+ 31  SELECT  'NEW N' AS "Type"
+ 32  ,	      COUNT(CASE WHEN amount = 1 THEN 1 END) AS "1-Day"
+ 33  ,	      COUNT(CASE WHEN amount = 3 THEN 1 END) AS "3-Day"
+ 34  ,	      COUNT(CASE WHEN amount = 5 THEN 1 END) AS "5-Day"
+ 35  ,	      COUNT(*) AS "TOTAL"
+ 36  FROM     price p , item i
+ 37  WHERE    active_flag = 'N' AND i.item_id = p.item_id
+ 38  AND     (TRUNC(SYSDATE) - TRUNC(i.release_date)) < 31
+ 39  AND      NOT (end_date IS NULL);
+FROM     price p , item i
+         *
+ERROR at line 6:
+ORA-00942: table or view does not exist 
+
+
+SQL> 
+SQL> 
+SQL> SPOOL OFF
