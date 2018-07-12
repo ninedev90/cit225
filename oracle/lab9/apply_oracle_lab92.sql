@@ -53,3 +53,224 @@ CREATE SEQUENCE transaction_s1 START WITH 1 NOCACHE;
 
 
 -----------------
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+  ( common_lookup_lab_s1.nextval
+    , 'CREDIT'
+    , 'credit'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+    , 'TRANSACTION'
+    , 'TRANSACTION_TYPE'
+    , 'CR'
+  );
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+  ( common_lookup_lab_s1.nextval
+    , 'DEBIT'
+    , 'debit'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+    , 'TRANSACTION'
+    , 'TRANSACTION_TYPE'
+    , 'DR'
+  );
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+  ( common_lookup_lab_s1.nextval
+    , 'DISCOVER_CARD'
+    , 'Discover Card'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+    , 'TRANSACTION'
+    , 'PAYMENT_METHOD_TYPE'
+    , NULL
+  );
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+  ( common_lookup_lab_s1.nextval
+    , 'VISA_CARD'
+    , 'Visa Card'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+    , 'TRANSACTION'
+    , 'PAYMENT_METHOD_TYPE'
+    , NULL
+  );
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+  ( common_lookup_lab_s1.nextval
+    , 'MASTER_CARD'
+    , 'Master Card'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+    , 'TRANSACTION'
+    , 'PAYMENT_METHOD_TYPE'
+    , NULL
+  );
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+  ( common_lookup_lab_s1.nextval
+    , 'CASH'
+    , 'cash'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+    , 'TRANSACTION'
+    , 'PAYMENT_METHOD_TYPE'
+    , NULL
+  );
+
+------------
+
+CREATE TABLE airport
+( airport_id                  NUMBER
+, airport_code                VARCHAR2(3)  CONSTRAINT nn_airport_1 NOT NULL
+, airport_city                VARCHAR2(30) CONSTRAINT nn_airport_2 NOT NULL
+, city                        VARCHAR2(30) CONSTRAINT nn_airport_3 NOT NULL
+, state_province              VARCHAR2(30) CONSTRAINT nn_airport_4 NOT NULL
+, created_by                  NUMBER       CONSTRAINT nn_airport_5 NOT NULL
+, creation_date               DATE         CONSTRAINT nn_airport_6 NOT NULL
+, last_updated_by             NUMBER       CONSTRAINT nn_airport_7 NOT NULL
+, last_update_date            DATE         CONSTRAINT nn_airport_8 NOT NULL
+, CONSTRAINT pk_airport_id             PRIMARY KEY(airport_id)
+, CONSTRAINT fk_airport_1              FOREIGN KEY(created_by) REFERENCES system_user(system_user_id)
+, CONSTRAINT fk_airport_2              FOREIGN KEY(last_updated_by) REFERENCES system_user(system_user_id));
+
+------------------
+CREATE UNIQUE INDEX natural_key
+  ON airport (
+    airport_code
+    , airport_city
+    , city
+    , state_province
+  );
+
+------------------
+CREATE SEQUENCE airport_s1 START WITH 1 NOCACHE;
+
+-----------------
+INSERT INTO airport VALUES
+  (
+      airport_s1.nextval
+      , 'LAX'
+      , 'Los angeles'
+      , 'Los angeles'
+      , 'California'
+      , 1
+      , SYSDATE
+      , 1
+      , SYSDATE
+  );
+
+INSERT INTO airport VALUES
+  (
+    airport_s1.nextval
+    , 'SLC'
+    , 'Salt Lake City'
+    , 'Provo'
+    , 'Utah'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+  );
+
+INSERT INTO airport VALUES
+  (
+    airport_s1.nextval
+    , 'SLC'
+    , 'Salt Lake City'
+    , 'Spanish Fork'
+    , 'Utah'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+  );
+
+INSERT INTO airport VALUES
+  (
+    airport_s1.nextval
+    , 'SFO'
+    , 'San Francisco'
+    , 'San Francisco'
+    , 'California'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+  );
+
+INSERT INTO airport VALUES
+  (
+    airport_s1.nextval
+    , 'SJC'
+    , 'San Jose'
+    , 'San Jose'
+    , 'California'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+  );
+
+INSERT INTO airport VALUES
+  (
+    airport_s1.nextval
+    , 'SJC'
+    , 'San Jose'
+    , 'San Carlos'
+    , 'California'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+  );
+
+------------
+CREATE TABLE account_list
+( account_list_id               NUMBER
+  , account_number              VARCHAR2(10) CONSTRAINT nn_account_list_1 NOT NULL
+  , consumed_date               DATE
+  , consumed_by                 NUMBER
+  , created_by                  NUMBER       CONSTRAINT nn_account_list_2 NOT NULL
+  , creation_date               DATE         CONSTRAINT nn_account_list_3 NOT NULL
+  , last_updated_by             NUMBER       CONSTRAINT nn_account_list_4 NOT NULL
+  , last_update_date            DATE         CONSTRAINT nn_account_list_5 NOT NULL
+  , CONSTRAINT pk_airport_id             PRIMARY KEY(account_list_id)
+  , CONSTRAINT fk_airport_1              FOREIGN KEY(consumed_by) REFERENCES system_user(system_user_id)
+  , CONSTRAINT fk_airport_2              FOREIGN KEY(created_by) REFERENCES system_user(system_user_id)
+  , CONSTRAINT fk_airport_3              FOREIGN KEY(last_updated_by) REFERENCES system_user(system_user_id));
+
+------------------
+CREATE SEQUENCE account_list_s1 START WITH 1 NOCACHE;
+
+------------
+
+CREATE TABLE transaction_upload
+( transaction_upload_id               NUMBER
+  , account_number              VARCHAR2(10) CONSTRAINT nn_account_list_1 NOT NULL
+  , consumed_date               DATE
+  , consumed_by                 NUMBER
+  , created_by                  NUMBER       CONSTRAINT nn_account_list_2 NOT NULL
+  , creation_date               DATE         CONSTRAINT nn_account_list_3 NOT NULL
+  , last_updated_by             NUMBER       CONSTRAINT nn_account_list_4 NOT NULL
+  , last_update_date            DATE         CONSTRAINT nn_account_list_5 NOT NULL
+  , CONSTRAINT pk_airport_id             PRIMARY KEY(transaction_upload_id)
+  , CONSTRAINT fk_airport_1              FOREIGN KEY(consumed_by) REFERENCES system_user(system_user_id)
+  , CONSTRAINT fk_airport_2              FOREIGN KEY(created_by) REFERENCES system_user(system_user_id)
+  , CONSTRAINT fk_airport_3              FOREIGN KEY(last_updated_by) REFERENCES system_user(system_user_id));
+
+------------------
+CREATE SEQUENCE transaction_upload_s1 START WITH 1 NOCACHE;
