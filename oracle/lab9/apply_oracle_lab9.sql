@@ -22,6 +22,31 @@ SPOOL apply_oracle_lab9.txt
 
 --Step #1a - You create the TRANSACTION table and a TRANSACTION_S1 sequence as qualified below.
 
+------------
+CREATE TABLE transaction
+( transaction_id              NUMBER
+  , transaction_account         VARCHAR2(15) CONSTRAINT nn_transaction_1 NOT NULL
+  , transaction_type            NUMBER       CONSTRAINT nn_transaction_2 NOT NULL
+  , transaction_date            DATE         CONSTRAINT nn_transaction_3 NOT NULL
+  , transaction_amount          NUMBER       CONSTRAINT nn_transaction_4 NOT NULL
+  , rental_id                   NUMBER       CONSTRAINT nn_transaction_5 NOT NULL
+  , payment_method_type         NUMBER       CONSTRAINT nn_transaction_6 NOT NULL
+  , payment_account_number      VARCHAR(19)  CONSTRAINT nn_transaction_7 NOT NULL
+  , created_by                  NUMBER       CONSTRAINT nn_transaction_8 NOT NULL
+  , creation_date               DATE         CONSTRAINT nn_transaction_9 NOT NULL
+  , last_updated_by             NUMBER       CONSTRAINT nn_transaction_10 NOT NULL
+  , last_update_date            DATE         CONSTRAINT nn_transaction_11 NOT NULL
+  , CONSTRAINT pk_transaction_id             PRIMARY KEY(transaction_id)
+  , CONSTRAINT fk_transaction_1              FOREIGN KEY(transaction_type) REFERENCES common_lookup_lab(common_lookup_lab_id)
+  , CONSTRAINT fk_transaction_2              FOREIGN KEY(rental_id) REFERENCES rental_lab(rental_lab_id)
+  , CONSTRAINT fk_transaction_3              FOREIGN KEY(payment_method_type) REFERENCES common_lookup_lab(common_lookup_lab_id)
+  , CONSTRAINT fk_transaction_4              FOREIGN KEY(created_by) REFERENCES system_user(system_user_id)
+  , CONSTRAINT fk_transaction_5              FOREIGN KEY(last_updated_by) REFERENCES system_user(system_user_id));
+
+
+------------------
+CREATE SEQUENCE transaction_s1 START WITH 1 NOCACHE;
+
 -- Verification Step #1a
 COLUMN table_name   FORMAT A14  HEADING "Table Name"
 COLUMN column_id    FORMAT 9999 HEADING "Column ID"
@@ -47,6 +72,18 @@ ORDER BY 2;
 
 -- Step #1b - You create the NATURAL_KEY unique index as qualified below.
 
+------------------
+CREATE UNIQUE INDEX natural_key
+  ON transaction (
+    rental_id
+    , transaction_type
+    , transaction_date
+    , payment_method_type
+    , payment_account_number
+    , transaction_account
+  );
+
+
 -- Verification Step #1b
 COLUMN table_name       FORMAT A12  HEADING "Table Name"
 COLUMN index_name       FORMAT A16  HEADING "Index Name"
@@ -66,6 +103,85 @@ AND      i.index_name = 'NATURAL_KEY';
 
 -- Step #2 - [2 points] Insert the following two TRANSACTION_TYPE rows and four PAYMENT_METHOD_TYPE rows into the COMMON_LOOKUP table. They should have valid who-audit column data.
 
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+  ( common_lookup_lab_s1.nextval
+    , 'CREDIT'
+    , 'credit'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+    , 'TRANSACTION'
+    , 'TRANSACTION_TYPE'
+    , 'CR'
+  );
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+  ( common_lookup_lab_s1.nextval
+    , 'DEBIT'
+    , 'debit'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+    , 'TRANSACTION'
+    , 'TRANSACTION_TYPE'
+    , 'DR'
+  );
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+  ( common_lookup_lab_s1.nextval
+    , 'DISCOVER_CARD'
+    , 'Discover Card'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+    , 'TRANSACTION'
+    , 'PAYMENT_METHOD_TYPE'
+    , NULL
+  );
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+  ( common_lookup_lab_s1.nextval
+    , 'VISA_CARD'
+    , 'Visa Card'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+    , 'TRANSACTION'
+    , 'PAYMENT_METHOD_TYPE'
+    , NULL
+  );
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+  ( common_lookup_lab_s1.nextval
+    , 'MASTER_CARD'
+    , 'Master Card'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+    , 'TRANSACTION'
+    , 'PAYMENT_METHOD_TYPE'
+    , NULL
+  );
+
+INSERT INTO COMMON_LOOKUP_LAB VALUES
+  ( common_lookup_lab_s1.nextval
+    , 'CASH'
+    , 'cash'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+    , 'TRANSACTION'
+    , 'PAYMENT_METHOD_TYPE'
+    , NULL
+  );
+
+
 -- Verification Step #2
 COLUMN common_lookup_table  FORMAT A20 HEADING "COMMON_LOOKUP_TABLE"
 COLUMN common_lookup_column FORMAT A20 HEADING "COMMON_LOOKUP_COLUMN"
@@ -81,6 +197,22 @@ ORDER BY 1, 2, 3 DESC;
 -- Step 3 - [14 points] Create the following AIRPORT and ACCOUNT_LIST tables as per the specification, but do so understanding the business logic of the model.
 
 -- Step #3a - You need to create the AIRPORT table and the AIRPORT_S1 sequences.
+CREATE TABLE airport
+( airport_id                  NUMBER
+, airport_code                VARCHAR2(3)  CONSTRAINT nn_airport_1 NOT NULL
+, airport_city                VARCHAR2(30) CONSTRAINT nn_airport_2 NOT NULL
+, city                        VARCHAR2(30) CONSTRAINT nn_airport_3 NOT NULL
+, state_province              VARCHAR2(30) CONSTRAINT nn_airport_4 NOT NULL
+, created_by                  NUMBER       CONSTRAINT nn_airport_5 NOT NULL
+, creation_date               DATE         CONSTRAINT nn_airport_6 NOT NULL
+, last_updated_by             NUMBER       CONSTRAINT nn_airport_7 NOT NULL
+, last_update_date            DATE         CONSTRAINT nn_airport_8 NOT NULL
+, CONSTRAINT pk_airport_id             PRIMARY KEY(airport_id)
+, CONSTRAINT fk_airport_1              FOREIGN KEY(created_by) REFERENCES system_user(system_user_id)
+, CONSTRAINT fk_airport_2              FOREIGN KEY(last_updated_by) REFERENCES system_user(system_user_id));
+
+------------------
+CREATE SEQUENCE airport_s1 START WITH 1 NOCACHE;
 
 -- Verification Step #3a
 COLUMN table_name   FORMAT A14  HEADING "Table Name"
@@ -106,6 +238,14 @@ WHERE    table_name = 'AIRPORT'
 ORDER BY 2;
 
 -- Step #3b - You need to create a unique natural key (named NK_AIRPORT) index for the AIRPORT table. You should create it with the following four columns.
+------------------
+CREATE UNIQUE INDEX nk_airport
+  ON airport (
+    airport_code
+    , airport_city
+    , city
+    , state_province
+  );
 
 -- Verification Step #3b
 COLUMN table_name       FORMAT A12  HEADING "Table Name"
@@ -125,6 +265,83 @@ AND      i.uniqueness = 'UNIQUE'
 AND      i.index_name = 'NK_AIRPORT';
 
 -- Step #3c - You need to seed the AIRPORT table with at least these cities, and any others that you’ve used for inserted values in the CONTACT table.
+INSERT INTO airport VALUES
+  (
+      airport_s1.nextval
+      , 'LAX'
+      , 'Los angeles'
+      , 'Los angeles'
+      , 'California'
+      , 1
+      , SYSDATE
+      , 1
+      , SYSDATE
+  );
+
+INSERT INTO airport VALUES
+  (
+    airport_s1.nextval
+    , 'SLC'
+    , 'Salt Lake City'
+    , 'Provo'
+    , 'Utah'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+  );
+
+INSERT INTO airport VALUES
+  (
+    airport_s1.nextval
+    , 'SLC'
+    , 'Salt Lake City'
+    , 'Spanish Fork'
+    , 'Utah'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+  );
+
+INSERT INTO airport VALUES
+  (
+    airport_s1.nextval
+    , 'SFO'
+    , 'San Francisco'
+    , 'San Francisco'
+    , 'California'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+  );
+
+INSERT INTO airport VALUES
+  (
+    airport_s1.nextval
+    , 'SJC'
+    , 'San Jose'
+    , 'San Jose'
+    , 'California'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+  );
+
+INSERT INTO airport VALUES
+  (
+    airport_s1.nextval
+    , 'SJC'
+    , 'San Jose'
+    , 'San Carlos'
+    , 'California'
+    , 1
+    , SYSDATE
+    , 1
+    , SYSDATE
+  );
 
 -- Verification Step #3c
 COLUMN code           FORMAT A4  HEADING "Code"
@@ -138,6 +355,24 @@ SELECT   airport_code AS code
 FROM     airport;
 
 -- Step #3d - You need to create the ACCOUNT_LIST table and ACCOUNT_LIST_S1 sequence.
+
+CREATE TABLE account_list
+( account_list_id               NUMBER
+  , account_number              VARCHAR2(10) CONSTRAINT nn_account_list_1 NOT NULL
+  , consumed_date               DATE
+  , consumed_by                 NUMBER
+  , created_by                  NUMBER       CONSTRAINT nn_account_list_2 NOT NULL
+  , creation_date               DATE         CONSTRAINT nn_account_list_3 NOT NULL
+  , last_updated_by             NUMBER       CONSTRAINT nn_account_list_4 NOT NULL
+  , last_update_date            DATE         CONSTRAINT nn_account_list_5 NOT NULL
+  , CONSTRAINT pk_account_list_id             PRIMARY KEY(account_list_id)
+  , CONSTRAINT fk_account_list_1              FOREIGN KEY(consumed_by) REFERENCES system_user(system_user_id)
+  , CONSTRAINT fk_account_list_2              FOREIGN KEY(created_by) REFERENCES system_user(system_user_id)
+  , CONSTRAINT fk_account_list_3              FOREIGN KEY(last_updated_by) REFERENCES system_user(system_user_id));
+
+------------------
+CREATE SEQUENCE account_list_s1 START WITH 1 NOCACHE;
+
 
 -- Verification Step #3d
 COLUMN table_name   FORMAT A14
@@ -211,17 +446,19 @@ EXCEPTION
     /* This undoes all DML statements to this point in the procedure. */
     ROLLBACK TO SAVEPOINT all_or_none;
 END;
+/
+
+SHOW ERRORS
 
 EXECUTE seed_account_list();
 
 -- Verification Step #3e
-COLUMN airport FORMAT A7
-SELECT   SUBSTR(account_number,1,3) AS "Airport"
-,        COUNT(*) AS "# Accounts"
-FROM     account_list
-WHERE    consumed_date IS NULL
-GROUP BY SUBSTR(account_number,1,3)
-ORDER BY 1;
+COLUMN object_name FORMAT A18
+COLUMN object_type FORMAT A12
+SELECT   object_name
+,        object_type
+FROM     user_objects
+WHERE    object_name = 'SEED_ACCOUNT_LIST';
 
 COLUMN airport FORMAT A7
 SELECT   SUBSTR(account_number,1,3) AS "Airport"
@@ -232,7 +469,7 @@ GROUP BY SUBSTR(account_number,1,3)
 ORDER BY 1;
 
 -- Step #3f - In a prior lab and in both the create and seed scripts, the STATE_PROVINCE column values uses a mixture of US Postal Services state abbreviations and full state names. You need to update all STATE_PROVINCE values with their full state names because a subsequent seeding and the import program rely on full STATE_PROVINCE names. You need to update any pre-seeded US Postal Service state abbreviations with the full state names.
-UPDATE address
+UPDATE address_lab
 SET    state_province = 'California'
 WHERE  state_province = 'CA';
 
@@ -245,13 +482,13 @@ CREATE OR REPLACE PROCEDURE update_member_account IS
   /* Declare a SQL cursor fabricated from local variables. */  
   CURSOR member_cursor IS
     SELECT   DISTINCT
-             m.member_id
+             m.member_lab_id
     ,        a.city
     ,        a.state_province
-    FROM     member m INNER JOIN contact c
-    ON       m.member_id = c.member_id INNER JOIN address a
-    ON       c.contact_id = a.contact_id
-    ORDER BY m.member_id;
+    FROM     member_lab m INNER JOIN contact_lab c
+    ON       m.member_lab_id = c.member_lab_id INNER JOIN address_lab a
+    ON       c.contact_lab_id = a.contact_lab_id
+    ORDER BY m.member_lab_id;
  
 BEGIN
  
@@ -261,7 +498,7 @@ BEGIN
   /* Open a local cursor. */  
   FOR i IN member_cursor LOOP
  
-      /* Secure a unique account number as they're consumed from the list. */
+      /* Secure a unique account number as theyre consumed from the list. */
       SELECT al.account_number
       INTO   lv_account_number
       FROM   account_list al INNER JOIN airport ap
@@ -275,7 +512,7 @@ BEGIN
       /* Update a member with a unique account number linked to their nearest airport. */
       UPDATE member
       SET    account_number = lv_account_number
-      WHERE  member_id = i.member_id;
+      WHERE  member_lab_id = i.member_lab_id;
  
       /* Mark consumed the last used account number. */      
       UPDATE account_list
@@ -298,6 +535,9 @@ EXCEPTION
     /* This undoes all DML statements to this point in the procedure. */
     ROLLBACK TO SAVEPOINT all_or_none;
 END;
+/
+
+SHOW ERRORS
 
 EXECUTE update_member_account();
 
@@ -319,20 +559,56 @@ COLUMN alcode         FORMAT A5     HEADING "Airport|Account|Code"
  
 -- Query distinct members and addresses.
 SELECT   DISTINCT
-         m.member_id
+         m.member_lab_id as member_id
 ,        c.last_name
 ,        m.account_number
 ,        a.city AS acity
 ,        ap.state_province AS apstate
 ,        SUBSTR(al.account_number,1,3) AS alcode
-FROM     member m INNER JOIN contact c
-ON       m.member_id = c.member_id INNER JOIN address a
-ON       c.contact_id = a.contact_id INNER JOIN airport ap
+FROM     member_lab m INNER JOIN contact_lab c
+ON       m.member_lab_id = c.member_lab_id INNER JOIN address_lab a
+ON       c.contact_lab_id = a.contact_lab_id INNER JOIN airport ap
 ON       a.city = ap.city
 AND      a.state_province = ap.state_province INNER JOIN account_list al
 ON       ap.airport_code = SUBSTR(al.account_number,1,3)
 ORDER BY 1;
 
 -- Step #4 - [5 points] Create the following TRANSACTION_UPLOAD table as per the specification, but do so understanding the business logic of the model. As a BIG PICTURE, our video store just got a consolidation of rentals from a store that’s closed for our customers. We need to import the values and ensure that our source data agrees with the other store. For example, do all customer names, addresses, account numbers match our data. If they do, the merge should go well. If they don’t, the figures will ultimately be incorrect.
+
+CREATE TABLE transaction_upload
+( account_number	VARCHAR2(10)
+, first_name	    VARCHAR2(20)
+, middle_name	    VARCHAR2(20)
+, last_name		    VARCHAR2(20)
+, check_out_date	DATE
+, return_date		DATE
+, rental_item_type	VARCHAR2(12)
+, transaction_type  VARCHAR2(14)
+, transaction_amount NUMBER
+, transaction_date	DATE
+, item_id			NUMBER
+, payment_method_type VARCHAR2(14)
+, payment_account_number VARCHAR2(19))
+  ORGANIZATION EXTERNAL
+  ( TYPE oracle_loader
+    DEFAULT DIRECTORY upload
+    ACCESS PARAMETERS
+    ( RECORDS DELIMITED BY NEWLINE CHARACTERSET US7ASCII
+      BADFILE     'UPLOAD':'transaction_upload.bad'
+      DISCARDFILE 'UPLOAD':'transaction_upload.dis'
+      LOGFILE     'UPLOAD':'transaction_upload.log'
+      FIELDS TERMINATED BY ','
+      OPTIONALLY ENCLOSED BY "'" --'
+      MISSING FIELD VALUES ARE NULL )
+    LOCATION ('transaction_upload.csv'))
+REJECT LIMIT UNLIMITED;
+
+SET LONG 200000  
+SELECT   dbms_metadata.get_ddl('TABLE','TRANSACTION_UPLOAD') AS "Table Description"
+FROM dual;
+
+-- Verification Step #4 
+SELECT   COUNT(*) AS "External Rows"
+FROM     transaction_upload;
 
 SPOOL OFF
