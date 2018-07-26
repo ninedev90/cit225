@@ -183,15 +183,15 @@ INSERT INTO COMMON_LOOKUP_LAB VALUES
 
 
 -- Verification Step #2
-COLUMN common_lookup_table  FORMAT A20 HEADING "COMMON_LOOKUP_TABLE"
-COLUMN common_lookup_column FORMAT A20 HEADING "COMMON_LOOKUP_COLUMN"
-COLUMN common_lookup_type   FORMAT A20 HEADING "COMMON_LOOKUP_TYPE"
-SELECT   common_lookup_table
-,        common_lookup_column
-,        common_lookup_type
-FROM     common_lookup
-WHERE    common_lookup_table = 'TRANSACTION'
-AND      common_lookup_column IN ('TRANSACTION_TYPE','PAYMENT_METHOD_TYPE')
+COLUMN common_lookup_lab_table  FORMAT A20 HEADING "COMMON_LOOKUP_TABLE"
+COLUMN common_lookup_lab_column FORMAT A20 HEADING "COMMON_LOOKUP_COLUMN"
+COLUMN common_lookup_lab_type   FORMAT A20 HEADING "COMMON_LOOKUP_TYPE"
+SELECT   common_lookup_lab_table
+,        common_lookup_lab_column
+,        common_lookup_lab_type
+FROM     common_lookup_lab
+WHERE    common_lookup_lab_table = 'TRANSACTION'
+AND      common_lookup_lab_column IN ('TRANSACTION_TYPE','PAYMENT_METHOD_TYPE')
 ORDER BY 1, 2, 3 DESC;
 
 -- Step 3 - [14 points] Create the following AIRPORT and ACCOUNT_LIST tables as per the specification, but do so understanding the business logic of the model.
@@ -510,7 +510,7 @@ BEGIN
       AND    ROWNUM < 2;
  
       /* Update a member with a unique account number linked to their nearest airport. */
-      UPDATE member
+      UPDATE member_lab
       SET    account_number = lv_account_number
       WHERE  member_lab_id = i.member_lab_id;
  
@@ -607,5 +607,8 @@ SET LONG 200000
 SELECT   dbms_metadata.get_ddl('TABLE','TRANSACTION_UPLOAD') AS "Table Description"
 FROM dual;
 
+-- Verification Step #4 
+SELECT   COUNT(*) AS "External Rows"
+FROM     transaction_upload;
 
 SPOOL OFF

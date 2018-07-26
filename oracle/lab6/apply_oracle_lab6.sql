@@ -537,6 +537,7 @@ INSERT INTO contact_lab
 , member_lab_id
 , contact_lab_type
 , first_name
+, middle_name
 , last_name
 , created_by
 , creation_date
@@ -549,7 +550,8 @@ VALUES
   FROM     common_lookup_lab
   WHERE    common_lookup_lab_context = 'CONTACT_LAB'
   AND      common_lookup_lab_type = 'CUSTOMER')       -- contact_lab_type
-,'Lily Luna'                                          -- first_name
+,'Lily'                                          -- first_name
+,'Luna'                                          -- middle name
 ,'Potter'                                           -- last_name
 ,(SELECT   system_user_lab_id
   FROM     system_user_lab
@@ -808,7 +810,7 @@ VALUES
 ,(SELECT   contact_lab_id
   FROM     contact_lab
   WHERE    last_name = 'Potter'
-  AND      first_name = 'Lily Luna')
+  AND      first_name = 'Lily')
 , TRUNC(SYSDATE)
 , TRUNC(SYSDATE) + 5
 , 1001

@@ -31,6 +31,9 @@ AND      c.last_name = tu.last_name
 ORDER BY c.contact_lab_id;
 
 
+UPDATE SET last_updated_by = SOURCE.last_updated_by
+,          last_update_date = SOURCE.last_update_date;
+
 
 -- Step #1a - Check the join condition between the MEMBER and CONTACT table, which should return 15 rows. If this is not correct, fix the foreign key values in the CONTACT table.
 SELECT   COUNT(*)
