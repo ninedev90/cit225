@@ -102,8 +102,7 @@ SELECT NVL(r.rental_lab_id,rental_lab_s1.NEXTVAL) AS rental_lab_id
 ,      r.creation_date
 ,      r.last_updated_by
 ,      r.last_update_date
-FROM (
-        SELECT DISTINCT r.rental_lab_id
+FROM (SELECT DISTINCT r.rental_lab_id
         ,      c.contact_lab_id
         ,      TRUNC(tu.check_out_date) AS check_out_date
         ,      TRUNC(tu.return_date) AS return_date
