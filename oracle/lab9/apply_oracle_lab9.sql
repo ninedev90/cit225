@@ -75,7 +75,7 @@ ORDER BY 2;
 ------------------
 CREATE UNIQUE INDEX natural_key
   ON transaction (
-    rental_id
+    rental_lab_id
     , transaction_type
     , transaction_date
     , payment_method_type

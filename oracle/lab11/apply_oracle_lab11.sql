@@ -40,10 +40,10 @@ USING (
   AND  TRUNC(tu.check_out_date) = TRUNC(r.check_out_date)
   AND  TRUNC(tu.return_date) = TRUNC(r.return_date)
 ) source
-ON (target.column_name = source.column_name)
+ON (target.rental_lab_id = source.rental_lab_id)
 WHEN MATCHED THEN
-UPDATE SET target.column_name = source.column_name
-,          target.column_name = source.column_name
+UPDATE SET target.last_updated_by = source.last_updated_by
+,          target.last_update_date = source.last_update_date
 WHEN NOT MATCHED THEN
 INSERT VALUES
 (
@@ -66,7 +66,8 @@ FROM     rental_lab;
 
 MERGE INTO rental_item_lab target
 USING (
-  SELECT   r.rental_lab_id
+  SELECT   ri.rental_item_lab_id
+  ,        r.rental_lab_id
   ,        tu.item_id
   ,        TRUNC(r.return_date) - TRUNC(r.check_out_date) AS rental_item_lab_price
   ,        cl.common_lookup_lab_id AS rental_item_lab_type
@@ -85,17 +86,18 @@ USING (
   ON   c.contact_lab_id = r.customer_id
   AND  TRUNC(tu.check_out_date) = TRUNC(r.check_out_date)
   AND TRUNC(tu.return_date) = TRUNC(r.return_date)
+  LEFT JOIN rental_item_lab ri ON ri.rental_lab_id = r.rental_lab_id
 ) source
-ON (target.column_name = source.column_name)
+ON (target.rental_item_lab_id = source.rental_item_lab_id)
 WHEN MATCHED THEN
-UPDATE SET target.column_name = source.column_name
-,          target.column_name = source.column_name
+UPDATE SET target.last_updated_by = source.last_updated_by
+        , target.last_update_date = source.last_update_date
 WHEN NOT MATCHED THEN
 INSERT VALUES
 (
   rental_item_lab_s1.nextval
   , source.rental_lab_id
-  , source.item_lab_id
+  , source.item_id
   , source.created_by
   , source.creation_date
   , source.last_updated_by
@@ -155,10 +157,10 @@ USING (
   , cl2.common_lookup_lab_id
   , tu.payment_account_number
 ) source
-ON (target.column_name = source.column_name)
+ON (target.transaction_id = source.transaction_id)
 WHEN MATCHED THEN
-UPDATE SET target.column_name = source.column_name
-,          target.column_name = source.column_name
+UPDATE SET target.last_updated_by = source.last_updated_by
+,          target.last_update_date = source.last_update_date
 WHEN NOT MATCHED THEN
 INSERT VALUES
 (
@@ -211,10 +213,10 @@ BEGIN
   AND  TRUNC(tu.check_out_date) = TRUNC(r.check_out_date)
   AND  TRUNC(tu.return_date) = TRUNC(r.return_date)
   ) source
-  ON (target.column_name = source.column_name)
+  ON (target.rental_lab_id = source.rental_lab_id)
   WHEN MATCHED THEN
-  UPDATE SET target.column_name = source.column_name
-  ,          target.column_name = source.column_name
+  UPDATE SET target.last_updated_by = source.last_updated_by
+  ,          target.last_update_date = source.last_update_date
   WHEN NOT MATCHED THEN
   INSERT VALUES
   (
@@ -231,7 +233,8 @@ BEGIN
   -- Merge into RENTAL_ITEM table.
   MERGE INTO rental_item_lab target
   USING (
-  SELECT   r.rental_lab_id
+  SELECT   ri.rental_item_lab_id
+  ,        r.rental_lab_id
   ,        tu.item_id
   ,        TRUNC(r.return_date) - TRUNC(r.check_out_date) AS rental_item_lab_price
   ,        cl.common_lookup_lab_id AS rental_item_lab_type
@@ -250,17 +253,18 @@ BEGIN
   ON   c.contact_lab_id = r.customer_id
   AND  TRUNC(tu.check_out_date) = TRUNC(r.check_out_date)
   AND TRUNC(tu.return_date) = TRUNC(r.return_date)
+  LEFT JOIN rental_item_lab ri ON ri.rental_lab_id = r.rental_lab_id
   ) source
-  ON (target.column_name = source.column_name)
+  ON (target.rental_item_lab_id = source.rental_item_lab_id)
   WHEN MATCHED THEN
-  UPDATE SET target.column_name = source.column_name
-  ,          target.column_name = source.column_name
+  UPDATE SET target.last_updated_by = source.last_updated_by
+  ,          target.last_update_date = source.last_update_date
   WHEN NOT MATCHED THEN
   INSERT VALUES
   (
   rental_item_lab_s1.nextval
   , source.rental_lab_id
-  , source.item_lab_id
+  , source.item_id
   , source.created_by
   , source.creation_date
   , source.last_updated_by
@@ -313,10 +317,10 @@ BEGIN
   , cl2.common_lookup_lab_id
   , tu.payment_account_number
   ) source
-  ON (target.column_name = source.column_name)
+  ON (target.transaction_id = source.transaction_id)
   WHEN MATCHED THEN
-  UPDATE SET target.column_name = source.column_name
-  ,          target.column_name = source.column_name
+  UPDATE SET target.last_updated_by = source.last_updated_by
+  ,          target.last_update_date = source.last_update_date
   WHEN NOT MATCHED THEN
   INSERT VALUES
   (
@@ -357,9 +361,9 @@ COLUMN transaction_count FORMAT 99,999 HEADING "Transaction|Count"
 SELECT   il1.rental_count
   ,        il2.rental_item_count
   ,        il3.transaction_count
-FROM    (SELECT COUNT(*) AS rental_count FROM rental) il1 CROSS JOIN
-  (SELECT COUNT(*) AS rental_item_count FROM rental_item) il2 CROSS JOIN
-  (SELECT COUNT(*) AS transaction_count FROM TRANSACTION) il3;
+FROM    (SELECT COUNT(*) AS rental_count FROM rental_lab) il1 CROSS JOIN
+  (SELECT COUNT(*) AS rental_item_count FROM rental_item_lab) il2 CROSS JOIN
+  (SELECT COUNT(*) AS transaction_count FROM transaction) il3;
 
 
 -- 4d - [2 points of 12 points] You re-run the upload_transaction procedure with the following syntax:
@@ -375,18 +379,34 @@ COLUMN transaction_count FORMAT 99,999 HEADING "Transaction|Count"
 SELECT   il1.rental_count
   ,        il2.rental_item_count
   ,        il3.transaction_count
-FROM    (SELECT COUNT(*) AS rental_count FROM rental) il1 CROSS JOIN
-  (SELECT COUNT(*) AS rental_item_count FROM rental_item) il2 CROSS JOIN
+FROM    (SELECT COUNT(*) AS rental_count FROM rental_lab) il1 CROSS JOIN
+  (SELECT COUNT(*) AS rental_item_count FROM rental_item_lab) il2 CROSS JOIN
   (SELECT COUNT(*) AS transaction_count FROM TRANSACTION) il3;
 
 
 -- Step#5 - [5 points] Create a query that prints the following types of data for the year 2009, which is only possible when you adjust for the included 6% interest. You need to make that adjustment inside the third merge statement’s SELECT clause.
-SELECT   EXTRACT(MONTH FROM TO_DATE('02-FEB-2009'))
-  ,        EXTRACT(YEAR FROM TO_DATE('02-FEB-2009'))
-FROM     dual;
-
-SELECT   TO_CHAR(9999,'$9,999,999.00') AS "Formatted"
-FROM     dual;
+SELECT  tr.MONTH
+,       tr.BASE_REVENUE
+,       tr.ten_plus AS "10_PLUS"
+,       tr.twenty_plus AS "20_PLUS"
+,       tr.ten_plus_less_b AS "10_PLUS_LESS_B"
+,       tr.twenty_plus_less_b AS "20_PLUS_LESS_B"
+FROM (
+        SELECT CONCAT(TO_CHAR(t.transaction_Date,'MON'),CONCAT('-',EXTRACT(YEAR FROM t.transaction_date))) AS MONTH
+        ,       EXTRACT(MONTH FROM TRUNC(t.transaction_date)) AS sortkey
+        ,       TO_CHAR(SUM(t.transaction_amount),'$9,999,999.00') AS BASE_REVENUE
+        ,       TO_CHAR(SUM(t.transaction_amount + (t.transaction_amount * .1)),'$9,999,999.00') AS ten_plus
+        ,       TO_CHAR(SUM(t.transaction_amount + (t.transaction_amount * .2)),'$9,999,999.00') AS twenty_plus
+        ,       TO_CHAR(SUM(t.transaction_amount + (t.transaction_amount * .1)) -
+                        SUM(t.transaction_amount),'$9,999,999.00') AS ten_plus_less_b
+        ,       TO_CHAR(SUM(t.transaction_amount + (t.transaction_amount * .2)) -
+                        SUM(t.transaction_amount),'$9,999,999.00') AS twenty_plus_less_b
+        FROM transaction t 
+        WHERE EXTRACT(YEAR FROM TRUNC(t.transaction_date)) = 2009
+        GROUP BY CONCAT(TO_CHAR(t.transaction_Date,'MON'),CONCAT('-',EXTRACT(YEAR FROM t.transaction_date)))
+        , EXTRACT(MONTH FROM TRUNC(t.transaction_date))
+) tr
+ORDER BY tr.sortkey;
 
 SPOOL OFF
 
