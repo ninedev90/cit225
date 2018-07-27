@@ -31,9 +31,6 @@ AND      c.last_name = tu.last_name
 ORDER BY c.contact_lab_id;
 
 
-UPDATE SET last_updated_by = SOURCE.last_updated_by
-,          last_update_date = SOURCE.last_update_date;
-
 
 -- Step #1a - Check the join condition between the MEMBER and CONTACT table, which should return 15 rows. If this is not correct, fix the foreign key values in the CONTACT table.
 SELECT   COUNT(*)
@@ -130,86 +127,75 @@ SELECT   COUNT(*) AS "Rental after count"
 FROM     rental_lab;
 
 -- Step #2  - [15 points] The second SELECT statement requires that you inserted values into the RENTAL table in the last step. It leverages the joins that you worked out in the first SELECT statement. Don’t try to re-invent the wheel because it isn’t profitable in this case.
-SELECT   COUNT(*)
-FROM    (SELECT   rental_item_lab_id
-           ,        r.rental_lab_id
-           ,        tu.item_lab_id
-           ,        TRUNC(r.return_date) - TRUNC(r.check_out_date) AS rental_item_lab_price
-           ,        cl.common_lookup_lab_id AS rental_item_lab_type
-           ,        3 AS created_by
-           ,        TRUNC(creation_date) AS creation_date
-           ,        3 AS last_updated_by
-           ,        TRUNC(last_update_date) AS last_update_date
-         FROM ... ) il;
-
-
 SELECT   r.rental_lab_id
-, tu.item_id
-, TRUNC(r.return_date) - TRUNC(r.check_out_date) AS rental_item_lab_price
-, cl.common_lookup_lab_id AS rental_item_lab_type
-, 3 AS created_by
-, TRUNC(SYSDATE) AS creation_date
-, 3 AS last_updated_by
-, TRUNC(SYSDATE) AS last_update_date
-FROM member_lab m 
-INNER JOIN contact_lab c ON   m.member_lab_id = c.member_lab_id 
-INNER JOIN transaction_upload tu ON   c.first_name = tu.first_name
-AND  NVL(c.middle_name,'x') = NVL(tu.middle_name,'x')
-AND  c.last_name = tu.last_name
-AND  tu.account_number = m.account_number 
-INNER JOIN common_lookup_lab cl ON cl.common_lookup_lab_type = tu.rental_item_type
-AND cl.common_lookup_lab_table = 'RENTAL_ITEM_LAB' LEFT JOIN rental_lab r
-ON   c.contact_lab_id = r.customer_id
-AND  TRUNC(tu.check_out_date) = TRUNC(r.check_out_date)
-AND  TRUNC(tu.return_date) = TRUNC(r.return_date);
+         ,        tu.item_id
+         ,        TRUNC(r.return_date) - TRUNC(r.check_out_date) AS rental_item_lab_price
+         ,        cl.common_lookup_lab_id AS rental_item_lab_type
+         ,        3 AS created_by
+         ,        TRUNC(SYSDATE) AS creation_date
+         ,        3 AS last_updated_by
+         ,        TRUNC(SYSDATE) AS last_update_date
+         FROM member_lab m INNER JOIN contact_lab c
+      ON   m.member_lab_id = c.member_lab_id INNER JOIN transaction_upload tu
+      ON   c.first_name = tu.first_name
+      AND  NVL(c.middle_name,'x') = NVL(tu.middle_name,'x')
+      AND  c.last_name = tu.last_name
+      AND  tu.account_number = m.account_number INNER JOIN common_lookup_lab cl
+        ON cl.common_lookup_lab_type = tu.rental_item_type
+        AND cl.common_lookup_lab_table = 'RENTAL_ITEM_LAB' LEFT JOIN rental_lab r
+      ON   c.contact_lab_id = r.customer_id
+      AND  TRUNC(tu.check_out_date) = TRUNC(r.check_out_date)
+AND TRUNC(tu.return_date) = TRUNC(r.return_date);
 
 
 -- Step #2a  - Join the foregoing result set (the foregoing result set is the result set of the prior join) to the COMMON_LOOKUP table on an INNER JOIN, and translate the COMMON_LOOKUP_TYPE column value to a COMMON_LOOKUP_ID value.
 -- Step #2b  - Join the foregoing result set to the RENTAL_ITEM table on an LEFT JOIN.
 -- Step #2c  - Remove the DISTINCT operator
 -- Step #2d  - Restructure the SELECT clause list.
-SET NULL '<Null>'
-COLUMN rental_item_id     FORMAT 99999 HEADING "Rental|Item ID #"
-COLUMN rental_id          FORMAT 99999 HEADING "Rental|ID #"
-COLUMN item_id            FORMAT 99999 HEADING "Item|ID #"
-COLUMN rental_item_price  FORMAT 99999 HEADING "Rental|Item|Price"
-COLUMN rental_item_type   FORMAT 99999 HEADING "Rental|Item|Type"
-SELECT   r.rental_lab_id
-, tu.item_id
-, TRUNC(r.return_date) - TRUNC(r.check_out_date) AS rental_item_lab_price
-, cl.common_lookup_lab_id AS rental_item_lab_type
-, 3 AS created_by
-, TRUNC(SYSDATE) AS creation_date
-, 3 AS last_updated_by
-, TRUNC(SYSDATE) AS last_update_date
-FROM member_lab m 
-INNER JOIN contact_lab c ON   m.member_lab_id = c.member_lab_id 
-INNER JOIN transaction_upload tu ON   c.first_name = tu.first_name
-AND  NVL(c.middle_name,'x') = NVL(tu.middle_name,'x')
-AND  c.last_name = tu.last_name
-AND  tu.account_number = m.account_number 
-INNER JOIN common_lookup_lab cl ON cl.common_lookup_lab_type = tu.rental_item_type
-AND cl.common_lookup_lab_table = 'RENTAL_ITEM_LAB' LEFT JOIN rental_lab r
-ON   c.contact_lab_id = r.customer_id
-AND  TRUNC(tu.check_out_date) = TRUNC(r.check_out_date)
-AND  TRUNC(tu.return_date) = TRUNC(r.return_date)
-
 SELECT   COUNT(*) AS "Rental Item Before Count"
-FROM     rental_item;
+FROM     rental_item_lab;
+
+INSERT INTO rental_item_lab
+SELECT rental_item_lab_s1.NEXTVAL AS rental_item_lab_id
+, r.rental_lab_id
+,      r.item_id
+,      r.created_by
+,      r.creation_date
+,      r.last_updated_by
+,      r.last_update_date
+,      r.rental_item_lab_price
+,      r.rental_item_lab_type
+FROM (
+        SELECT   r.rental_lab_id
+         ,        tu.item_id
+         ,        TRUNC(r.return_date) - TRUNC(r.check_out_date) AS rental_item_lab_price
+         ,        cl.common_lookup_lab_id AS rental_item_lab_type
+         ,        3 AS created_by
+         ,        TRUNC(SYSDATE) AS creation_date
+         ,        3 AS last_updated_by
+         ,        TRUNC(SYSDATE) AS last_update_date
+         FROM member_lab m INNER JOIN contact_lab c
+         ON   m.member_lab_id = c.member_lab_id INNER JOIN transaction_upload tu
+         ON   c.first_name = tu.first_name
+         AND  NVL(c.middle_name,'x') = NVL(tu.middle_name,'x')
+         AND  c.last_name = tu.last_name
+         AND  tu.account_number = m.account_number INNER JOIN common_lookup_lab cl
+         ON cl.common_lookup_lab_type = tu.rental_item_type
+         AND cl.common_lookup_lab_table = 'RENTAL_ITEM_LAB' LEFT JOIN rental_lab r
+         ON   c.contact_lab_id = r.customer_id
+         AND  TRUNC(tu.check_out_date) = TRUNC(r.check_out_date)
+         AND TRUNC(tu.return_date) = TRUNC(r.return_date)
+) r ;
 
 SELECT   COUNT(*) AS "Rental Item After Count"
-FROM     rental_item;
+FROM     rental_item_lab;
 
 -- Step #3 - [15 points] The third SELECT statement requires that you inserted values into the RENTAL_ITEM table in the last step. It also leverages the joins that you worked out in the first and secondSELECT statements. Don’t try to re-invent the wheel because it isn’t profitable, especially in this case.
 
-ON      cl1.common_lookup_table = 'TRANSACTION'
-AND     cl1.common_lookup_column = 'TRANSACTION_TYPE'
-AND     cl1.common_lookup_type = 'Check mapping table to find the correct type value';
-
-ON      cl2.common_lookup_table = 'TRANSACTION'
-AND     cl2.common_lookup_column = 'PAYMENT_METHOD_TYPE'
-AND     cl2.common_lookup_type = 'Check mapping table to find the correct type value'
 
 
 
 SPOOL OFF
+
+COMMIT;
+
