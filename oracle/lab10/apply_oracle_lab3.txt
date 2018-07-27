@@ -783,7 +783,8 @@ SQL> SELECT   common_lookup_lab_id
   3  ,	      common_lookup_lab_type
   4  FROM     common_lookup_lab;
 
-COMMON_LOOKUP_LAB_ID COMMON_LOOKUP_LAB_CONT COMMON_LOOKUP_LA                    
+                     Common                                                     
+COMMON_LOOKUP_LAB_ID Lookup Context         COMMON_LOOKUP_TY                    
 -------------------- ---------------------- ----------------                    
                    1 SYSTEM_USER_LAB        SYSTEM_ADMIN                        
                    2 SYSTEM_USER_LAB        DBA                                 

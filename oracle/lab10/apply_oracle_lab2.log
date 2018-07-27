@@ -96,7 +96,7 @@ SQL> SELECT   table_name
  15  WHERE    table_name = 'SYSTEM_USER_LAB'
  16  ORDER BY 2;
 
-TABLE_NAME       COLUMN_ID COLUMN_NAME            NULLABLE DATA_TYPE            
+Table Name       Column ID Column Name            Nullable Data Type            
 ---------------- --------- ---------------------- -------- ------------         
 SYSTEM_USER_LAB          1 SYSTEM_USER_LAB_ID     NOT NULL NUMBER(22)           
 SYSTEM_USER_LAB          2 SYSTEM_USER_LAB_NAME   NOT NULL VARCHAR2(20)         
@@ -129,7 +129,8 @@ SQL> SELECT   uc.constraint_name
   8  	      AND      uc.constraint_type = UPPER('c')
   9  ORDER BY uc.constraint_name;
 
-CONSTRAINT_NAME        SEARCH_CONDITION                     C                   
+                                                            C                   
+CONSTRAINT NAME        Search Condition                     T                   
 ---------------------- ------------------------------------ -                   
 NN_SYSTEM_USER_LAB_1   "SYSTEM_USER_LAB_NAME" IS NOT NULL   C                   
 NN_SYSTEM_USER_LAB_2   "SYSTEM_USER_LAB_GROUP_ID" IS NOT NU C                   
@@ -272,7 +273,7 @@ SQL> SELECT   table_name
  15  WHERE    table_name = 'COMMON_LOOKUP_LAB'
  16  ORDER BY 2;
 
-TABLE_NAME       COLUMN_ID COLUMN_NAME            NULLABLE DATA_TYPE            
+Table Name       Column ID Column Name            Nullable Data Type            
 ---------------- --------- ---------------------- -------- ------------         
 COMMON_LOOKUP_LA         1 COMMON_LOOKUP_LAB_ID   NOT NULL NUMBER(22)           
 B                                                                               
@@ -317,7 +318,8 @@ SQL> SELECT   uc.constraint_name
   9  ORDER BY uc.constraint_type DESC
  10    ,	uc.constraint_name;
 
-CONSTRAINT_NAME        SEARCH_CONDITION                     C                   
+                                                            C                   
+CONSTRAINT NAME        Search Condition                     T                   
 ---------------------- ------------------------------------ -                   
 PK_CLOOKUP_LAB_1                                            P                   
 NN_CLOOKUP_LAB_1       "COMMON_LOOKUP_LAB_CONTEXT" IS NOT N C                   
@@ -542,7 +544,7 @@ SQL> SELECT   table_name
  16  ORDER BY 2;
 
                            Column                                               
-TABLE_NAME       COLUMN_ID Name                   NULLABLE DATA_TYPE            
+Table Name       Column ID Name                   Nullable Data Type            
 ---------------- --------- ---------------------- -------- ------------         
 MEMBER_LAB               1 MEMBER_LAB_ID          NOT NULL NUMBER(22)           
 MEMBER_LAB               2 MEMBER_LAB_TYPE                 NUMBER(22)           
@@ -572,7 +574,8 @@ SQL> SELECT   uc.constraint_name
   9  ORDER BY uc.constraint_type DESC
  10    ,	uc.constraint_name;
 
-CONSTRAINT_NAME        SEARCH_CONDITION                     C                   
+                                                            C                   
+CONSTRAINT NAME        Search Condition                     T                   
 ---------------------- ------------------------------------ -                   
 PK_MEMBER_LAB_1                                             P                   
 NN_MEMBER_LAB_2        "ACCOUNT_NUMBER" IS NOT NULL         C                   
@@ -732,7 +735,7 @@ SQL> SELECT   table_name
  16  ORDER BY 2;
 
                            Column                                               
-TABLE_NAME       COLUMN_ID Name                   NULLABLE DATA_TYPE            
+Table Name       Column ID Name                   Nullable Data Type            
 ---------------- --------- ---------------------- -------- ------------         
 CONTACT_LAB              1 CONTACT_LAB_ID         NOT NULL NUMBER(22)           
 CONTACT_LAB              2 MEMBER_LAB_ID          NOT NULL NUMBER(22)           
@@ -763,7 +766,8 @@ SQL> SELECT   uc.constraint_name
   9  ORDER BY uc.constraint_type DESC
  10    ,	uc.constraint_name;
 
-CONSTRAINT_NAME        SEARCH_CONDITION                     C                   
+                                                            C                   
+CONSTRAINT NAME        Search Condition                     T                   
 ---------------------- ------------------------------------ -                   
 PK_CONTACT_LAB_1                                            P                   
 NN_CONTACT_LAB_1       "MEMBER_LAB_ID" IS NOT NULL          C                   
@@ -933,7 +937,7 @@ SQL> SELECT   table_name
  16  ORDER BY 2;
 
                            Column                                               
-TABLE_NAME       COLUMN_ID Name                   NULLABLE DATA_TYPE            
+Table Name       Column ID Name                   Nullable Data Type            
 ---------------- --------- ---------------------- -------- ------------         
 ADDRESS_LAB              1 ADDRESS_LAB_ID         NOT NULL NUMBER(22)           
 ADDRESS_LAB              2 CONTACT_LAB_ID         NOT NULL NUMBER(22)           
@@ -964,7 +968,8 @@ SQL> SELECT   uc.constraint_name
   9  ORDER BY uc.constraint_type DESC
  10    ,	uc.constraint_name;
 
-CONSTRAINT_NAME        SEARCH_CONDITION                     C                   
+                                                            C                   
+CONSTRAINT NAME        Search Condition                     T                   
 ---------------------- ------------------------------------ -                   
 PK_ADDRESS_LAB_1                                            P                   
 NN_ADDRESS_LAB_1       "CONTACT_LAB_ID" IS NOT NULL         C                   
@@ -1129,7 +1134,7 @@ SQL> SELECT   table_name
  16  ORDER BY 2;
 
                            Column                                               
-TABLE_NAME       COLUMN_ID Name                   NULLABLE DATA_TYPE            
+Table Name       Column ID Name                   Nullable Data Type            
 ---------------- --------- ---------------------- -------- ------------         
 STREET_ADDRESS_L         1 STREET_ADDRESS_LAB_ID  NOT NULL NUMBER(22)           
 AB                                                                              
@@ -1171,7 +1176,8 @@ SQL> SELECT   uc.constraint_name
   9  ORDER BY uc.constraint_type DESC
  10    ,	uc.constraint_name;
 
-CONSTRAINT_NAME        SEARCH_CONDITION                     C                   
+                                                            C                   
+CONSTRAINT NAME        Search Condition                     T                   
 ---------------------- ------------------------------------ -                   
 PK_S_ADDRESS_LAB_1                                          P                   
 NN_SADDRESS_LAB_1      "ADDRESS_LAB_ID" IS NOT NULL         C                   
@@ -1302,7 +1308,7 @@ SQL> SELECT   table_name
  16  ORDER BY 2;
 
                            Column                                               
-TABLE_NAME       COLUMN_ID Name                   NULLABLE DATA_TYPE            
+Table Name       Column ID Name                   Nullable Data Type            
 ---------------- --------- ---------------------- -------- ------------         
 TELEPHONE_LAB            1 TELEPHONE_LAB_ID       NOT NULL NUMBER(22)           
 TELEPHONE_LAB            2 CONTACT_LAB_ID         NOT NULL NUMBER(22)           
@@ -1334,7 +1340,8 @@ SQL> SELECT   uc.constraint_name
   9  ORDER BY uc.constraint_type DESC
  10    ,	uc.constraint_name;
 
-CONSTRAINT_NAME        SEARCH_CONDITION                     C                   
+                                                            C                   
+CONSTRAINT NAME        Search Condition                     T                   
 ---------------------- ------------------------------------ -                   
 PK_TELEPHONE_LAB_1                                          P                   
 NN_TELEPHONE_LAB_1     "CONTACT_LAB_ID" IS NOT NULL         C                   
@@ -1506,7 +1513,7 @@ SQL> SELECT   table_name
  16  ORDER BY 2;
 
                            Column                                               
-TABLE_NAME       COLUMN_ID Name                   NULLABLE DATA_TYPE            
+Table Name       Column ID Name                   Nullable Data Type            
 ---------------- --------- ---------------------- -------- ------------         
 RENTAL_LAB               1 RENTAL_LAB_ID          NOT NULL NUMBER(22)           
 RENTAL_LAB               2 CUSTOMER_ID            NOT NULL NUMBER(22)           
@@ -1535,7 +1542,8 @@ SQL> SELECT   uc.constraint_name
   9  ORDER BY uc.constraint_type DESC
  10    ,	uc.constraint_name;
 
-CONSTRAINT_NAME        SEARCH_CONDITION                     C                   
+                                                            C                   
+CONSTRAINT NAME        Search Condition                     T                   
 ---------------------- ------------------------------------ -                   
 PK_RENTAL_LAB_1                                             P                   
 NN_RENTAL_LAB_1        "CUSTOMER_ID" IS NOT NULL            C                   
@@ -1664,7 +1672,7 @@ SQL> SELECT   table_name
  16  ORDER BY 2;
 
                            Column                                               
-TABLE_NAME       COLUMN_ID Name                   NULLABLE DATA_TYPE            
+Table Name       Column ID Name                   Nullable Data Type            
 ---------------- --------- ---------------------- -------- ------------         
 ITEM_LAB                 1 ITEM_LAB_ID            NOT NULL NUMBER(22)           
 ITEM_LAB                 2 ITEM_LAB_BARCODE       NOT NULL VARCHAR2(14)         
@@ -1696,7 +1704,8 @@ SQL> SELECT   uc.constraint_name
   9  ORDER BY uc.constraint_type DESC
  10    ,	uc.constraint_name;
 
-CONSTRAINT_NAME        SEARCH_CONDITION                     C                   
+                                                            C                   
+CONSTRAINT NAME        Search Condition                     T                   
 ---------------------- ------------------------------------ -                   
 PK_ITEM_LAB_1                                               P                   
 NN_ITEM_LAB_1          "ITEM_LAB_BARCODE" IS NOT NULL       C                   
@@ -1824,7 +1833,7 @@ SQL> SELECT   table_name
  16  ORDER BY 2;
 
                            Column                                               
-TABLE_NAME       COLUMN_ID Name                   NULLABLE DATA_TYPE            
+Table Name       Column ID Name                   Nullable Data Type            
 ---------------- --------- ---------------------- -------- ------------         
 RENTAL_ITEM_LAB          1 RENTAL_ITEM_LAB_ID     NOT NULL NUMBER(22)           
 RENTAL_ITEM_LAB          2 RENTAL_LAB_ID          NOT NULL NUMBER(22)           
@@ -1852,7 +1861,8 @@ SQL> SELECT   uc.constraint_name
   9  ORDER BY uc.constraint_type DESC
  10    ,	uc.constraint_name;
 
-CONSTRAINT_NAME        SEARCH_CONDITION                     C                   
+                                                            C                   
+CONSTRAINT NAME        Search Condition                     T                   
 ---------------------- ------------------------------------ -                   
 PK_RENTAL_ITEM_LAB_1                                        P                   
 NN_RENTAL_ITEM_LAB_1   "RENTAL_LAB_ID" IS NOT NULL          C                   

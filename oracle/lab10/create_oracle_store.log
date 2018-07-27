@@ -1,3 +1,6 @@
+SQL> 
+SQL> -- Set SQL*Plus environmnet variables.
+SQL> SET ECHO ON
 SQL> SET FEEDBACK ON
 SQL> SET NULL '<Null>'
 SQL> SET PAGESIZE 999

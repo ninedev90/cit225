@@ -54,7 +54,7 @@ SQL> SELECT   table_name
  16  ORDER BY 2;
 
                          Column                                                 
-Table Name     COLUMN_ID Name                   NULLABLE DATA_TYPE              
+Table Name     Column ID Name                   Nullable Data Type              
 -------------- --------- ---------------------- -------- ------------           
 RENTAL_ITEM_LA         1 RENTAL_ITEM_LAB_ID     NOT NULL NUMBER(22)             
 B                                                                               
@@ -144,7 +144,7 @@ SQL> SELECT   table_name
  16  ORDER BY 2;
 
                          Column                                                 
-Table Name     COLUMN_ID Name                   NULLABLE DATA_TYPE              
+Table Name     Column ID Name                   Nullable Data Type              
 -------------- --------- ---------------------- -------- ------------           
 PRICE_LAB              1 PRICE_LAB_ID           NOT NULL NUMBER(22)             
 PRICE_LAB              2 ITEM_LAB_ID            NOT NULL NUMBER(22)             
@@ -176,7 +176,7 @@ SQL> SELECT   uc.constraint_name
   8  AND      uc.constraint_name = UPPER('yn_price')
   9  AND      uc.constraint_type = 'C';
 
-Constraint Name  SEARCH_CONDITION                                               
+Constraint Name  Search Condition                                               
 ---------------- ------------------------------                                 
 YN_PRICE         active_flag in ('Y', 'N')                                      
 
@@ -219,7 +219,7 @@ SQL> SELECT   table_name
  16  ORDER BY 2;
 
                          Column                                                 
-Table Name     COLUMN_ID Name                   NULLABLE DATA_TYPE              
+Table Name     Column ID Name                   Nullable Data Type              
 -------------- --------- ---------------------- -------- ------------           
 ITEM_LAB               1 ITEM_LAB_ID            NOT NULL NUMBER(22)             
 ITEM_LAB               2 ITEM_LAB_BARCODE       NOT NULL VARCHAR2(14)           
@@ -1124,7 +1124,7 @@ SQL> SELECT   table_name
  16  ORDER BY 2;
 
                          Column                                                 
-Table Name     COLUMN_ID Name                   NULLABLE DATA_TYPE              
+Table Name     Column ID Name                   Nullable Data Type              
 -------------- --------- ---------------------- -------- ------------           
 COMMON_LOOKUP_         1 COMMON_LOOKUP_LAB_ID   NOT NULL NUMBER(22)             
 LAB                                                                             
@@ -1454,7 +1454,7 @@ SQL> SELECT   table_name
  16  ORDER BY 2;
 
                          Column                                                 
-Table Name     COLUMN_ID Name                   NULLABLE DATA_TYPE              
+Table Name     Column ID Name                   Nullable Data Type              
 -------------- --------- ---------------------- -------- ------------           
 COMMON_LOOKUP_         1 COMMON_LOOKUP_LAB_ID   NOT NULL NUMBER(22)             
 LAB                                                                             
@@ -1516,10 +1516,10 @@ NN_CLOOKUP_LAB_4       "CREATED_BY" IS NOT NULL             C
 NN_CLOOKUP_LAB_5       "CREATION_DATE" IS NOT NULL          C                   
 NN_CLOOKUP_LAB_6       "LAST_UPDATED_BY" IS NOT NULL        C                   
 NN_CLOOKUP_LAB_7       "LAST_UPDATE_DATE" IS NOT NULL       C                   
-SYS_C0021355           "COMMON_LOOKUP_LAB_TABLE" IS NOT NUL C                   
+SYS_C0021947           "COMMON_LOOKUP_LAB_TABLE" IS NOT NUL C                   
                        L                                                        
                                                                                 
-SYS_C0021356           "COMMON_LOOKUP_LAB_COLUMN" IS NOT NU C                   
+SYS_C0021948           "COMMON_LOOKUP_LAB_COLUMN" IS NOT NU C                   
                        LL                                                       
                                                                                 
 
