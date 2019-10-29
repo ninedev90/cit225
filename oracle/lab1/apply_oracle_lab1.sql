@@ -14,6 +14,6 @@
 -- ----------------------------------------------------------------------
 
 -- Call the setup scripts.
-@/home/student/Data/cit225/oracle/lib/cleanup_oracle.sql
-@/home/student/Data/cit225/oracle/lib/create_oracle_store.sql
-@/home/student/Data/cit225/oracle/lib/seed_oracle_store.sql
+@/home/student/Data/cit225/oracle/lib1/cleanup_oracle.sql
+@/home/student/Data/cit225/oracle/lib1/create_oracle_store.sql
+@/home/student/Data/cit225/oracle/lib1/seed_oracle_store.sql
